@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>闪算训练平台</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <meta name="applicable-device" content="mobile">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_d1kxz15tx7.css" />
+    <script src="http://at.alicdn.com/t/font_925002_d1kxz15tx7.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: brown;
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+
+        .pagepanel {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+            background-color: transparent;
+        }
+
+        .topbar {
+            -webkit-flex: 2;
+            flex: 2;
+            display: -webkit-flex;
+            display: flex;
+            background-color: transparent;
+        }
+
+        .toptext {
+            margin: auto;
+            font-size: 3rem;
+            font-family: "幼圆";
+            color:#fff;
+        }
+
+        .sysicon {
+            font-size: 2.7rem;
+            margin-right: 0.5rem;
+            padding: 5px;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            color: #fff;
+        }
+
+        .middlecontent {
+            -webkit-flex: 7;
+            flex: 7;
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+        }
+        .middletop {
+            flex: 6;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .middlebottom {
+            flex: 4;
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+        }
+        .btitem {
+            flex: 1;
+            align-items: center;
+            display: -webkit-flex;
+            display: flex;
+        }
+        .mybt {
+            text-align: center;
+            height: 80%;
+            width: 92%;
+            margin: auto;
+            display: -webkit-flex;
+            display: flex;
+            border-radius:5px;
+            background-color:#d60707;
+        }
+        .bttext {
+            margin: auto;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 3px
+        }
+        .showpanel {
+            width: 92%;
+            margin: auto;
+            font-size:2rem;
+            text-align:center;
+            color:#fff;
+        }
+
+        .footbar {
+            -webkit-flex: 1;
+            flex: 1;
+            display: -webkit-flex;
+            display: flex;
+            background-color: transparent;
+        }
+
+        .foottext {
+            margin: auto;
+            font-size: 0.7rem;
+            font-family: "幼圆";
+            color: #fff;
+            text-align:center;
+        }
+
+        .copyright{
+            margin-top:0.2rem;
+        }
+       
+    </style>
+    <script>
+        $(document).ready(function () {
+            _global_pagezxsobj.init();
+        });
+        var _global_pagezxsobj = {
+            _pagewidth: 0,
+            _pageheight: 0,
+            getfontsize: function (text) {
+                var _size = "";
+                switch (text.length) {
+                    case 1:
+                    case 2:
+                        _size = "8.5rem";
+                        break;
+                    case 3:
+                    case 4:
+                        _size = "7.5rem";
+                        break;
+                    case 5:
+                    case 6:
+                        _size = "6.5rem";
+                        break;
+                    case 7:
+                        _size = "5.5rem";
+                        break;
+                    case 8:
+                        _size = "5rem";
+                        break;
+                    case 9:
+                        _size = "4.5rem";
+                        break;
+                    default:
+                        _size = "4.5rem";
+                        break;
+                }
+                return _size;
+            },
+            gflag: {
+                maxweishu: 1,
+                firstweishu: 1,
+                endweishu: 1,
+                countnum:2
+            },
+            getrandomnum: function (min, max) {
+                max = max + 1;
+                var w = max - min;
+                return parseInt(Math.random() * w + min, 10);
+            },
+            init: function () {
+                this.initdata();
+                this.inithtml();
+            },
+            initdata: function () {
+                this._pagewidth = parseInt($(window).outerWidth(true), 10);
+                this._pageheight = parseInt($(window).outerHeight(true), 10);
+            },
+            inithtml: function () {
+                var _pagepanelhtm = $("<div class='pagepanel'></div>");
+                _pagepanelhtm.css({ "height": this._pageheight + "px" });
+
+                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i>闪算训练</div></div>");
+                _pagepanelhtm.append(_topbarhtm);
+
+                var _middlecontenthtm = $("<div class='middlecontent'></div>");
+                var _middletophtm = $("<div class='middletop'></div>");
+                var _showpanelhtm = $("<div class='showpanel'>N/A</div>");
+                var _nums = 8988562;
+                var _fontsize = this.getfontsize(("" + _nums));
+                _showpanelhtm.text(_nums);
+                _showpanelhtm.css({ "font-size": _fontsize});
+
+                _middletophtm.append(_showpanelhtm);
+                _middlecontenthtm.append(_middletophtm);
+                var _middlebottomhtm = $("<div class='middlebottom'></div>");
+                var _asked = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>查看答案</div></div></div>");
+                var _resetconfig = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>重置配置</div></div></div>");
+                var _nextlx = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>继续答题</div></div></div>");
+                _middlebottomhtm.append(_asked);
+                _middlebottomhtm.append(_resetconfig);
+                _middlebottomhtm.append(_nextlx);
+
+                _middlecontenthtm.append(_middlebottomhtm);
+                _pagepanelhtm.append(_middlecontenthtm);
+
+                var _footbarhtm = $("<div class='footbar'><div class='foottext'>声明：本系统仅供个人学习使用,非商业行为<br/><div class='copyright'>copyright (c) 2018-2019</div></div></div>");
+                _pagepanelhtm.append(_footbarhtm);
+
+                $("body").append(_pagepanelhtm);
+            },
+            jiafa: function(){
+
+            },
+            initconfig: function () {
+                var _tiku="";
+            }
+        };
+    </script>
+</head>
+<body ontouchstart>
+</body>
+</html>
