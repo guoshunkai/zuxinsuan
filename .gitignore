@@ -3,3 +3,7 @@
 /.vs
 /.zhxinsuan/bin
 /.zhxinsuan/obj
+/zhuxinsuan/obj/Debug
+/zhuxinsuan/obj/Release
+/zhuxinsuan/Properties/PublishProfiles/*.pubxml
+/zhuxinsuan/Properties/PublishProfiles/*.user
