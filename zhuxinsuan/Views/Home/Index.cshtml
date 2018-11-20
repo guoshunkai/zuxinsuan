@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_d1kxz15tx7.css" />
     <script src="http://at.alicdn.com/t/font_925002_d1kxz15tx7.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/baidu_tts_cors.js"></script>
     <style>
         html, body {
             margin: 0;
@@ -24,7 +25,7 @@
         }
 
         body {
-            background-color: brown;
+            background-color: #830101;
         }
 
         .icon {
@@ -59,7 +60,7 @@
             margin: auto;
             font-size: 3rem;
             font-family: "幼圆";
-            color:#fff;
+            color: #fff;
         }
 
         .sysicon {
@@ -77,26 +78,32 @@
             display: -webkit-flex;
             display: flex;
             flex-direction: column;
+            position:relative;
         }
+
         .middletop {
             flex: 6;
             display: -webkit-flex;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
+
         .middlebottom {
             flex: 4;
             display: -webkit-flex;
             display: flex;
             flex-direction: column;
         }
+
         .btitem {
             flex: 1;
             align-items: center;
             display: -webkit-flex;
             display: flex;
         }
+
         .mybt {
             text-align: center;
             height: 80%;
@@ -104,9 +111,12 @@
             margin: auto;
             display: -webkit-flex;
             display: flex;
-            border-radius:5px;
-            background-color:#d60707;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            box-shadow: #fff 2px 2px 5px;
+            /*background-color: #f90303;*/
         }
+
         .bttext {
             margin: auto;
             color: #fff;
@@ -114,17 +124,103 @@
             font-weight: 400;
             letter-spacing: 3px
         }
+
         .showpanel {
             width: 92%;
             margin: auto;
-            font-size:2rem;
-            text-align:center;
-            color:#fff;
+            flex: 1;
+            display: -webkit-flex;
+            display: flex;
+        }
+        .showtoppanel {
+            text-align: center;
+            color: #fff;
+            flex: 1;
+            font-size: 4.3rem;
+        }
+        /*参数配置*/
+        .configpanel {
+            position: absolute;
+            top: 0;
+            left: 3%;
+            width: 94%;
+            height: 100%;
+            z-index: 555;
+            background-color: #fff;
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+        }
+        .configitem_top {
+            flex: 1;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            background-color:#e5e5e5;
+        }
+        .configitem {
+            flex: 1;
+            display: -webkit-flex;
+            display: flex;
+            border-bottom:1px solid #ccc;
+        }
+        .configitem_sub1 {
+            flex: 2;
+            display: -webkit-flex;
+            display: flex;
+            justify-content:flex-start;
+            align-items:center;
+        }
+        .configitem_sub2 {
+            flex: 7;
+            display: -webkit-flex;
+            display: flex;
+        }
+        .configitem_sub3 {
+            flex: 1;
+            display: -webkit-flex;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .cofigitemsubtext1 {
+            padding-left:10px;
+        }
+        .cofigitemsubtext2 {
+            margin:auto;
+        }
+        .cofigitemsubtext3 {
+            padding-right:10px;
+        }
+        .configitem_foot {
+            flex: 1.5;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bt_start {
+            margin: auto;
+            text-align: center;
+            height: 80%;
+            width: 88%;
+            margin: auto;
+            border-radius: 5px;
+            display: -webkit-flex;
+            display: flex;
+            background-color: #f90303;
+        }
+        .bt_starttext {
+            margin: auto;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 3px
         }
 
         .footbar {
             -webkit-flex: 1;
-            flex: 1;
             display: -webkit-flex;
             display: flex;
             background-color: transparent;
@@ -135,56 +231,28 @@
             font-size: 0.7rem;
             font-family: "幼圆";
             color: #fff;
-            text-align:center;
+            text-align: center;
         }
 
-        .copyright{
-            margin-top:0.2rem;
+        .copyright {
+            margin-top: 0.2rem;
         }
-       
     </style>
     <script>
+        // 初始化变量
+        var audio = null;
+        var playBtn = null;
         $(document).ready(function () {
             _global_pagezxsobj.init();
         });
         var _global_pagezxsobj = {
             _pagewidth: 0,
             _pageheight: 0,
-            getfontsize: function (text) {
-                var _size = "";
-                switch (text.length) {
-                    case 1:
-                    case 2:
-                        _size = "8.5rem";
-                        break;
-                    case 3:
-                    case 4:
-                        _size = "7.5rem";
-                        break;
-                    case 5:
-                    case 6:
-                        _size = "6.5rem";
-                        break;
-                    case 7:
-                        _size = "5.5rem";
-                        break;
-                    case 8:
-                        _size = "5rem";
-                        break;
-                    case 9:
-                        _size = "4.5rem";
-                        break;
-                    default:
-                        _size = "4.5rem";
-                        break;
-                }
-                return _size;
-            },
             gflag: {
                 maxweishu: 1,
                 firstweishu: 1,
                 endweishu: 1,
-                countnum:2
+                countnum: 2
             },
             getrandomnum: function (min, max) {
                 max = max + 1;
@@ -208,13 +276,21 @@
 
                 var _middlecontenthtm = $("<div class='middlecontent'></div>");
                 var _middletophtm = $("<div class='middletop'></div>");
-                var _showpanelhtm = $("<div class='showpanel'>N/A</div>");
-                var _nums = 8988562;
-                var _fontsize = this.getfontsize(("" + _nums));
-                _showpanelhtm.text(_nums);
-                _showpanelhtm.css({ "font-size": _fontsize});
+                var _showpaneltophtm = $("<div class='showpanel'></div>");
+                var _showpaneltoptext = $("<div class='showtoppanel'>N/A</div>");
+                _showpaneltophtm.append(_showpaneltoptext);
 
-                _middletophtm.append(_showpanelhtm);
+                var _showpanelmiddelhtm = $("<div class='showpanel'></div>");
+                var _showpaneltoptext2 = $("<div class='showtoppanel'>N/A</div>");
+                _showpanelmiddelhtm.append(_showpaneltoptext2);
+
+                var _showpanelfoothtm = $("<div class='showpanel'></div>");
+                var _showpaneltoptext3 = $("<div class='showtoppanel'>N/A</div>");
+                _showpanelfoothtm.append(_showpaneltoptext3);
+
+                _middletophtm.append(_showpaneltophtm);
+                _middletophtm.append(_showpanelmiddelhtm);
+                _middletophtm.append(_showpanelfoothtm);
                 _middlecontenthtm.append(_middletophtm);
                 var _middlebottomhtm = $("<div class='middlebottom'></div>");
                 var _asked = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>查看答案</div></div></div>");
@@ -225,18 +301,80 @@
                 _middlebottomhtm.append(_nextlx);
 
                 _middlecontenthtm.append(_middlebottomhtm);
+                //设置配置层
+                _configpanel = $("<div class=\"configpanel\"></div>");
+                _configitem_top = $("<div class=\"configitem_top\"><div>参数设置</div></div>");
+                _configpanel.append(_configitem_top);
+                for (var i = 0; i < 9; i++) {
+                    var _configitem = $("<div id='configitem" + i + "' class=\"configitem\"></div>");
+                    var _itemsub1 = $("<div class=\"configitem_sub1\"><div class='cofigitemsubtext1'>题库</div></div>");
+                    var _itemsub2 = $("<div class=\"configitem_sub2\"></div>");
+                    var _itemsub3 = $("<div class=\"configitem_sub3\"><div class='cofigitemsubtext3'>></div></div>");
+                    _configitem.append(_itemsub1);
+                    _configitem.append(_itemsub2);
+                    _configitem.append(_itemsub3);
+                    _configpanel.append(_configitem);
+                }
+                _configitem_foot = $("<div class=\"configitem_foot\"></div>");
+                _btstatrxunlian = $("<div class=\"bt_start\"><div class='bt_starttext'>开始训练</div></div>");
+                _configitem_foot.append(_btstatrxunlian);
+                _configpanel.append(_configitem_foot);
+                _middlecontenthtm.append(_configpanel);
                 _pagepanelhtm.append(_middlecontenthtm);
 
-                var _footbarhtm = $("<div class='footbar'><div class='foottext'>声明：本系统仅供个人学习使用,非商业行为<br/><div class='copyright'>copyright (c) 2018-2019</div></div></div>");
+                var _footbarhtm = $("<div class='footbar'><div class='foottext'>更高 更快  更强<br/><div class='copyright'>copyright (c) 2018-2019</div></div></div>");
                 _pagepanelhtm.append(_footbarhtm);
 
                 $("body").append(_pagepanelhtm);
+                this.initbtevent();
             },
-            jiafa: function(){
+            initbtevent: function () {
+                $("#bt_ckda").on("click", function () {
+                    _global_pagezxsobj.tts();
+                });
+            },
+            jiafa: function () {
 
             },
             initconfig: function () {
-                var _tiku="";
+                var _tiku = "";
+            },
+            tts: function () {
+                let text = "7754986";
+                //playBtn.innerText = '准备中';
+                // 调用语音合成接口
+                // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
+                audio = btts({
+                    tex: text,
+                    tok: '24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118',
+                    spd: 5,
+                    pit: 5,
+                    vol: 15,
+                    per: 3
+                }, {
+                        volume: 0.3,
+                        autoDestory: true,
+                        timeout: 10000,
+                        hidden: true,
+                        onInit: function (htmlAudioElement) {
+
+                        },
+                        onSuccess: function (htmlAudioElement) {
+                            audio = htmlAudioElement;
+                            //playBtn.innerText = '播放';
+                            //play()；
+                            audio.play();
+                            audio.addEventListener('ended', function () {
+                                console.log("播放完毕：" + (new Date()).getTime(), 'ended');
+                            }, false);
+                        },
+                        onError: function (text) {
+                            alert(text)
+                        },
+                        onTimeout: function () {
+                            alert('timeout')
+                        }
+                    });
             }
         };
     </script>
