@@ -189,3 +189,5 @@
 /zhuxinsuan/obj/Release/zhuxinsuan.csprojResolveAssemblyReference.cache
 /zhuxinsuan/obj/Release/zhuxinsuan.dll
 /zhuxinsuan/obj/Release/zhuxinsuan.pdb
+/zhuxinsuan/*.csproj
+/zhuxinsuan/*.user
