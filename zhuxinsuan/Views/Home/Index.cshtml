@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>闪算训练平台@@1</title>
+    <title>闪算训练平台</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1, maximum-scale=1">
@@ -14,15 +14,16 @@
     <meta name="applicable-device" content="mobile">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta http-equiv="Cache-Control" content="no-transform" />
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_b0h5pjoyeot.css" />
-    <script src="http://at.alicdn.com/t/font_925002_b0h5pjoyeot.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_d0uys2bm6e.css" />
+    <script src="http://at.alicdn.com/t/font_925002_d0uys2bm6e.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="~/Scripts/baidu_tts_cors.js"></script>
     <style>
         html, body {
             margin: 0;
             padding: 0;
-            height:100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         body {
@@ -79,7 +80,7 @@
             display: -webkit-flex;
             display: flex;
             flex-direction: column;
-            position:relative;
+            position: relative;
         }
 
         .middletop {
@@ -106,9 +107,9 @@
         }
 
         .mybt {
-            min-height:3rem;
+            min-height: 2.6rem;
             text-align: center;
-            height: 80%;
+            height: 70%;
             width: 92%;
             margin: auto;
             display: -webkit-flex;
@@ -134,18 +135,20 @@
             display: -webkit-flex;
             display: flex;
         }
+
         .showtoppanel {
             text-align: center;
             color: #fff;
             flex: 1;
-            font-size: 4.3rem;
+            font-size: 4.1rem;
         }
         /*参数配置*/
         .configpanel {
             position: absolute;
             top: 0;
-            left: 3%;
-            width: 94%;
+            /*left: 3%;*/
+            /*width: 94%;*/
+            width: 100%;
             height: 100%;
             z-index: 555;
             background-color: #fff;
@@ -153,20 +156,23 @@
             display: flex;
             flex-direction: column;
         }
+
         .configitem_top {
             flex: 1;
             display: -webkit-flex;
             display: flex;
             align-items: center;
-            justify-content:center;
-            background-color:#e5e5e5;
+            justify-content: center;
+            background-color: #e5e5e5;
         }
-        .configitem{
+
+        .configitem {
             flex: 1;
             display: -webkit-flex;
             display: flex;
             border-bottom: 1px solid #ccc;
         }
+
         .configitem_sub1 {
             flex: 2;
             display: -webkit-flex;
@@ -174,6 +180,7 @@
             justify-content: flex-start;
             align-items: center;
         }
+
         .configitem_sub2 {
             flex: 7;
             display: -webkit-flex;
@@ -181,6 +188,7 @@
             justify-content: flex-start;
             align-items: center;
         }
+
         .configitem_sub3 {
             flex: 1;
             display: -webkit-flex;
@@ -188,15 +196,19 @@
             justify-content: flex-end;
             align-items: center;
         }
+
         .cofigitemsubtext1 {
-            padding-left:10px;
+            padding-left: 10px;
         }
+
         .cofigitemsubtext2 {
-            margin:auto;
+            margin: auto;
         }
+
         .cofigitemsubtext3 {
-            padding-right:10px;
+            padding-right: 10px;
         }
+
         .configitem_foot {
             flex: 1.5;
             display: -webkit-flex;
@@ -204,17 +216,20 @@
             align-items: center;
             justify-content: center;
         }
+
         .bt_start {
             margin: auto;
             text-align: center;
-            height: 80%;
-            width: 88%;
+            height: 70%;
+            width: 92%;
             margin: auto;
             border-radius: 5px;
             display: -webkit-flex;
             display: flex;
-            background-color: #f90303;
+            background-color: #830101;
+            min-height: 2.7rem;
         }
+
         .bt_starttext {
             margin: auto;
             color: #fff;
@@ -242,13 +257,14 @@
             margin-top: 0.2rem;
         }
 
-        .jiantou{
-            color:#ccc;
+        .jiantou {
+            color: #ccc;
         }
 
         .configfont {
             color: #b59f9f;
         }
+
         .btyuyin {
             width: 4rem;
             height: 1.8rem;
@@ -256,7 +272,9 @@
             border-radius: 50px;
             background-color: #e5e5e5;
             position: relative;
+            border: 1px solid #ccc;
         }
+
         .btyxswich {
             position: absolute;
             top: 0;
@@ -265,7 +283,88 @@
             width: 3rem;
             background: #4fb121;
             border-radius: 50px;
-            background-color:#4fb121;
+            background-color: #3ec400;
+        }
+
+        .zhezhaopanel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 556;
+            background-color: #272424;
+            opacity: 0.2;
+            display: none;
+        }
+
+        .zhezhaopanelsub {
+            position: absolute;
+            bottom: -500px;
+            left: 0;
+            z-index: 557;
+            background-color: #fff;
+            width: 100%;
+            height: 48%;
+            /*display: -webkit-flex;
+            display: flex;*/
+            flex-direction: column;
+            display: none;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .zhezhaopanelsubtitle {
+            flex: 1.2;
+            background-color: #e5e5e5;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
+            background: -webkit-linear-gradient(left top, red, blue);
+            background: -o-linear-gradient(bottom right, red, blue);
+            background: -moz-linear-gradient(bottom right, red, blue);
+            background: linear-gradient(to bottom, #830101, #6e0c0c);
+        }
+
+        .zhezhaopanelsubtitle_left {
+            flex: 6;
+            padding-left: 10px;
+            color: #fff;
+        }
+
+        .zhezhaopanelsubtitle_right {
+            flex: 1;
+            text-align: center;
+            color: #fff;
+        }
+
+        .zhezhaopanelsubbody {
+            flex: 6;
+            overflow-y: auto;
+        }
+        .configitemcontent {
+            width: 100%;
+            height: 3rem;
+            line-height: 3rem;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+            display: -webkit-flex;
+            display: flex;
+            align-items:center;
+        }
+        .configitemcontentleft {
+            flex:9;
+            text-align:left;
+            padding-left:10px;
+        }
+        .configitemcontentright {
+            flex: 1;
+            text-align: right;
+            padding-right:10px;
+        }
+        .duihao{
+            color:#3ec400;
+            font-size:2rem;
         }
     </style>
     <script>
@@ -284,6 +383,61 @@
                 endweishu: 1,
                 countnum: 2
             },
+            gstaticdata: {
+                data_tiku: [{ "随机生成": "1" }, { "随机题库": "2" }],
+                data_yuyin: [{ "开启": "1" }, { "关闭": "2" }],
+                data_yusheng: [{ "女声": "1" }, { "男声": "2" }],
+                data_yusu: [{ "慢速": "1" }, { "正常": "2" }, { "快速": "3" }],
+                data_guize: [{ "加法": "1" }, { "加减法": "2" }, { "乘法": "3" }, { "除法": "4" }],
+                data_bishu: [
+                    { "1笔": 2 },
+                    { "2笔": 3 },
+                    { "3笔": 4 },
+                    { "4笔": 5 },
+                    { "5笔": 6 },
+                    { "6笔": 7 },
+                    { "7笔": 8 },
+                    { "8笔": 10 },
+                    { "9笔": 15 },
+                    { "10笔": 20 }
+                ],
+                data_weishu: [
+                    { "1位": 1 },
+                    { "2位": 2 },
+                    { "3位": 3 },
+                    { "4位": 4 },
+                    { "5位": 5 },
+                    { "6位": 6 },
+                    { "7位": 7 },
+                    { "8位": 8 },
+                    { "9位": 9 }
+                ],
+                data_shijian1: [
+                    { "1秒": 1 },
+                    { "2秒": 2 },
+                    { "3秒": 3 },
+                    { "4秒": 4 },
+                    { "5秒": 5 },
+                    { "6秒": 6 },
+                    { "7秒": 7 }
+                ],
+                data_shouweishu: [
+                    { "2位": 2 },
+                    { "3位": 3 },
+                    { "4位": 4 },
+                    { "5位": 5 },
+                    { "6位": 6 },
+                    { "6位": 7 }
+                ],
+                data_moweishu: [
+                    { "1位": 1 },
+                    { "2位": 2 },
+                    { "3位": 3 },
+                    { "4位": 4 },
+                    { "5位": 5 },
+                    { "6位": 6 }
+                ]
+            },
             getrandomnum: function (min, max) {
                 max = max + 1;
                 var w = max - min;
@@ -301,7 +455,7 @@
                 var _pagepanelhtm = $("<div class='pagepanel'></div>");
                 _pagepanelhtm.css({ "height": this._pageheight + "px" });
 
-                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i>闪算训练</div></div>");
+                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i>XXX</div></div>");
                 _pagepanelhtm.append(_topbarhtm);
 
                 var _middlecontenthtm = $("<div class='middlecontent'></div>");
@@ -333,48 +487,76 @@
                 _middlecontenthtm.append(_middlebottomhtm);
                 //设置配置层
                 _configpanel = $("<div id='configpanel' class=\"configpanel\"></div>");
-                _configitem_top = $("<div class=\"configitem_top\"><div>参数设置</div></div>");
-                _configpanel.append(_configitem_top);
-                for (var i = 0; i < 9; i++) {
+                //_configitem_top = $("<div class=\"configitem_top\"><div>参数设置</div></div>");
+                //_configpanel.append(_configitem_top);
+                for (var i = 0; i < 10; i++) {
                     var _configitem = $("<div id='configitem" + i + "' class=\"configitem\"></div>");
                     var _itemsub1 = $("<div class=\"configitem_sub1\"><div class='cofigitemsubtext1'>题库</div></div>");
                     var _itemsub2 = $("<div class=\"configitem_sub2\"></div>");
                     var _itemsub3 = $("<div class=\"configitem_sub3\"><div class='cofigitemsubtext3'><i class='zxsiconfont zxsicon-iconfontjiantou jiantou'></i></div></div>");
+                    var _mytempcontaner = "";
+                    var _gstyle = false;
                     switch (i) {
                         case 0:
                             _itemsub1.find("div").text("题库");
-                            _mytiku = $("<div class='configfont'>随机生成</div>");
-                            _itemsub2.append(_mytiku);
+                            _mytempcontaner = $("<div class='configfont' cvalue='1'>随机生成</div>");
+                            _itemsub2.append(_mytempcontaner);
                             break;
                         case 1:
                             _itemsub1.find("div").text("语音");
-                            _radio_enable = $("<div class='configfont btyuyin'><div class='btyxswich' flag='1' id='btyxswich'></div></div>");
-                            _itemsub2.append(_radio_enable);
+                            _mytempcontaner = $("<div class='configfont btyuyin'><div class='btyxswich' flag='1' id='btyxswich'></div></div>");
+                            _itemsub2.append(_mytempcontaner);
                             _itemsub3.find("div").html("");
                             break;
                         case 2:
                             _itemsub1.find("div").text("语声");
-                            _itemsub3.find("div").html("");
+                            _mytempcontaner = $("<div id='configyusheng' class='configfont' cvalue='1'>女声</div>");
+                            _itemsub2.append(_mytempcontaner);
                             break;
                         case 3:
                             _itemsub1.find("div").text("语速");
+                            _mytempcontaner = $("<div id='configyusu' cvalue='2' class='configfont' onclick='_global_pagezxsobj.showzhezhao();'>正常</div>");
+                            _itemsub2.append(_mytempcontaner);
                             break;
                         case 4:
                             _itemsub1.find("div").text("规则");
+                            _mytempcontaner = $("<div id='configguize' cvalue='1' class='configfont'>加法</div>");
+                            _itemsub2.append(_mytempcontaner);
                             break;
                         case 5:
                             _itemsub1.find("div").text("笔数");
+                            _mytempcontaner = $("<div id='configbishu'  cvalue='2' class='configfont'>2笔</div>");
+                            _itemsub2.append(_mytempcontaner);
                             break;
                         case 6:
                             _itemsub1.find("div").text("位数");
+                            _mytempcontaner = $("<div id='configweishu' cvalue='1' class='configfont'>1位</div>");
+                            _itemsub2.append(_mytempcontaner);
                             break;
                         case 7:
+                            _itemsub1.find("div").text("首位数");
+                            _mytempcontaner = $("<div id='configshouweishu' cvalue='2' class='configfont'>2笔</div>");
+                            _itemsub2.append(_mytempcontaner);
+                            _gstyle = true;
+                            break;
+                        case 8:
+                            _itemsub1.find("div").text("末位数");
+                            _mytempcontaner = $("<div id='configmoweishu' cvalue='1' class='configfont'>1位</div>");
+                            _itemsub2.append(_mytempcontaner);
+                            _gstyle = true;
+                            break;
+                        case 9:
                             _itemsub1.find("div").text("时间");
+                            _mytempcontaner = $("<div id='configshijian' cvalue='1' class='configfont'>1秒</div>");
+                            _itemsub2.append(_mytempcontaner);
                             break;
                     }
                     _configitem.append(_itemsub1);
                     _configitem.append(_itemsub2);
                     _configitem.append(_itemsub3);
+                    if (_gstyle) {
+                        _configitem.css({"display":"none"});
+                    }
                     _configpanel.append(_configitem);
                 }
                 _configitem_foot = $("<div class=\"configitem_foot\"></div>");
@@ -383,11 +565,26 @@
                 _configpanel.append(_configitem_foot);
                 _middlecontenthtm.append(_configpanel);
                 _pagepanelhtm.append(_middlecontenthtm);
-             
+
                 var _footbarhtm = $("<div class='footbar'><div class='foottext'>更高 更快  更强<br/><div class='copyright'>copyright (c) 2018-2019</div></div></div>");
                 _pagepanelhtm.append(_footbarhtm);
 
                 $("body").append(_pagepanelhtm);
+
+                //遮罩
+                var _zhezhaopanel = $("<div class='zhezhaopanel' id='zhezhaopanel'></div>");
+                var _zhezhaopanelsub = $("<div class='zhezhaopanelsub' id='zhezhaopanelsub'></div>");
+                var _zhezhaopanelsubtitle = $("<div class='zhezhaopanelsubtitle'></div>");
+                var _zhezhaopanelsubtitle_left = $("<div class='zhezhaopanelsubtitle_left'>选择部署</div>");
+                var _zhezhaopanelsubtitle_right = $("<div class='zhezhaopanelsubtitle_right' id='btclose'>关闭</div>");
+                _zhezhaopanelsubtitle.append(_zhezhaopanelsubtitle_left);
+                _zhezhaopanelsubtitle.append(_zhezhaopanelsubtitle_right);
+
+                var _zhezhaopanelsubbody = $("<div class='zhezhaopanelsubbody'></div>");
+                _zhezhaopanelsub.append(_zhezhaopanelsubtitle);
+                _zhezhaopanelsub.append(_zhezhaopanelsubbody);
+                $("body").append(_zhezhaopanel);
+                $("body").append(_zhezhaopanelsub);
                 this.initbtevent();
             },
             initbtevent: function () {
@@ -399,23 +596,136 @@
                     _global_pagezxsobj.tts();
                     $("#configpanel").show();
                 });
-                $("#btyxswich").on("click", function () {
+                $("#btyxswich").on("click", function (ev) {
+                    var oEvent = ev || event;
+                    //js阻止事件冒泡
+                    oEvent.cancelBubble = true;
+                    oEvent.stopPropagation();
+
+                    //js阻止链接默认行为，没有停止冒泡
+                    //oEvent.preventDefault();
+                    //return false;
                     if ($(this).attr("flag") == "1") {
                         $(this).attr("flag", "0");
-                        $(this).css({ "background": "#fff"});
+                        $(this).css({ "background": "#fff" });
                         $(this).animate({ "left": "0" }, 200);
                     } else {
                         $(this).attr("flag", "1");
-                        $(this).css({ "background": "#4fb121" });
+                        $(this).css({ "background": "#3ec400" });
                         $(this).animate({ "left": "1rem" }, 200);
                     }
                 });
+                $("#zhezhaopanel").on("click", function (ev) {
+                    var oEvent = ev || event;
+                    //js阻止事件冒泡
+                    oEvent.cancelBubble = true;
+                    oEvent.stopPropagation();
+
+                    //js阻止链接默认行为，没有停止冒泡
+                    //oEvent.preventDefault();
+                    //return false;
+                    _global_pagezxsobj.closezhezhao();
+                });
+                $("#btclose").on("click", function () {
+                    _global_pagezxsobj.closezhezhao();
+                });
+                $(".configitem_sub2").on("click", function () {
+                    var _this = $(this);
+                    if (_this.parent().prop("id") =='configitem1') { return; }
+                    var _cvalue = _this.find("div").attr("cvalue");
+                    //alert(_this.find("div").html() + "|" + _cvalue);
+                    _global_pagezxsobj.initconfigselect(_this.parent().prop("id"), _cvalue);
+                });
+                $(".configitem_sub3").on("click", function () {
+                    var _this = $(this).prev();
+                    if (_this.parent().prop("id") == 'configitem1') { return; }
+                    var _cvalue = _this.find("div").attr("cvalue");
+                    //alert(_this.find("div").html() + "|" + _cvalue);
+                    _global_pagezxsobj.initconfigselect(_this.parent().prop("id"),_cvalue);
+                });
+            },
+            showzhezhao: function () {
+                console.log("open");
+                $("#zhezhaopanelsub").css({ "display": "-webkit-flex", "display": "flex" });
+                $("#zhezhaopanel").show();
+                $("#zhezhaopanelsub").show();
+                $("#zhezhaopanelsub").animate({ "bottom": "0px" }, 300);
+            },
+            closezhezhao: function () {
+                console.log("close");
+                $("#zhezhaopanelsub").animate({ "bottom": "-500px" }, 300);
+                setTimeout(function () {
+                    $("#zhezhaopanelsub").hide();
+                    $("#zhezhaopanel").hide();
+                }, 301);
+            },
+            initconfigselect: function (id,cvalue) {
+                $(".zhezhaopanelsubbody").html("");
+                switch (id) {
+                    case "configitem0":
+                        _global_pagezxsobj.initconfig("选择题库", cvalue, _global_pagezxsobj.gstaticdata.data_tiku);
+                        break;
+                    case "configitem2":
+                        _global_pagezxsobj.initconfig("语声切换", cvalue, _global_pagezxsobj.gstaticdata.data_yusheng);
+                        break;
+                    case "configitem3":
+                        _global_pagezxsobj.initconfig("语速切换", cvalue, _global_pagezxsobj.gstaticdata.data_yusu);
+                        break;
+                    case "configitem4":
+                        _global_pagezxsobj.initconfig("规则切换", cvalue, _global_pagezxsobj.gstaticdata.data_guize);
+                        break;
+                    case "configitem5":
+                        _global_pagezxsobj.initconfig("笔数切换", cvalue, _global_pagezxsobj.gstaticdata.data_bishu);
+                        break;
+                    case "configitem6":
+                        _global_pagezxsobj.initconfig("位数切换", cvalue, _global_pagezxsobj.gstaticdata.data_weishu);
+                        break;
+                    case "configitem7":
+                        _global_pagezxsobj.initconfig("首位数切换", cvalue, _global_pagezxsobj.gstaticdata.data_shouweishu);
+                        break;
+                    case "configitem8":
+                        _global_pagezxsobj.initconfig("末位数切换", cvalue, _global_pagezxsobj.gstaticdata.data_moweishu);
+                        break;
+                    case "configitem9":
+                        _global_pagezxsobj.initconfig("时间切换", cvalue, _global_pagezxsobj.gstaticdata.data_shijian1);
+                        break;
+                }
+                $(".configitemcontent").on("click", function () {
+                    var myid = $(this).prop("id");
+                    $(".configitemcontent").removeAttr("checked");
+                    $("#" + myid).attr("checked", true);
+                    $(".configitemcontent").find(".configitemcontentright").html("");
+                    $("#" + myid).find(".configitemcontentright").eq(0).html("<i class='zxsiconfont zxsicon-duihao7 duihao'></i>");
+                    $("#" + id).find(".configfont").html($(this).find(".configitemcontentleft").html());
+                    $("#" + id).find(".configfont").attr("cvalue", $(this).find(".configitemcontentleft").attr("vvalue"));
+                    _global_pagezxsobj.closezhezhao();
+                });
+                _global_pagezxsobj.showzhezhao();
             },
             jiafa: function () {
 
             },
-            initconfig: function () {
-                var _tiku = "";
+            initconfig: function (title, cvalue,obj) {
+                $(".zhezhaopanelsubtitle_left").eq(0).html(title);
+                for (var i = 0; i < obj.length; i++) {
+                    var _ttobj = obj[i];
+                    var _itemtemphtml = $("<div id='' class='configitemcontent'></div>");
+                    var _itemtemphtmlsubleft = $("<div class='configitemcontentleft'></div>");
+                    var _itemtemphtmlsubright = $("<div class='configitemcontentright'></div>");
+                    for (var m in _ttobj) {
+                        _itemtemphtmlsubleft.html(m);
+                        _itemtemphtml.prop("id", "item_" + _ttobj[m]);
+                        _itemtemphtmlsubleft.attr("vvalue", _ttobj[m]);
+                        if (cvalue == _ttobj[m]) {
+                            _itemtemphtmlsubright.append("<i class='zxsiconfont zxsicon-duihao7 duihao'></i>");
+                            _itemtemphtml.attr("checked", true);
+                        }
+
+                    }
+                    _itemtemphtml.append(_itemtemphtmlsubleft);
+                    _itemtemphtml.append(_itemtemphtmlsubright);
+                    $(".zhezhaopanelsubbody").append(_itemtemphtml);
+                }
             },
             tts: function () {
                 let text = "7754986";
