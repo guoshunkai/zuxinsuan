@@ -90,6 +90,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            min-height:19rem;
         }
 
         .middlebottom {
@@ -218,6 +219,7 @@
         }
 
         .bt_start {
+            min-height:2.5rem;
             margin: auto;
             text-align: center;
             height: 70%;
@@ -377,6 +379,8 @@
         var _global_pagezxsobj = {
             _pagewidth: 0,
             _pageheight: 0,
+            _globalguizeid: "",
+            _globalconfigpara:null,
             gflag: {
                 maxweishu: 1,
                 firstweishu: 1,
@@ -390,16 +394,17 @@
                 data_yusu: [{ "慢速": "1" }, { "正常": "2" }, { "快速": "3" }],
                 data_guize: [{ "加法": "1" }, { "加减法": "2" }, { "乘法": "3" }, { "除法": "4" }],
                 data_bishu: [
-                    { "1笔": 2 },
-                    { "2笔": 3 },
-                    { "3笔": 4 },
-                    { "4笔": 5 },
-                    { "5笔": 6 },
-                    { "6笔": 7 },
-                    { "7笔": 8 },
-                    { "8笔": 10 },
-                    { "9笔": 15 },
-                    { "10笔": 20 }
+                    { "2笔": 2 },
+                    { "3笔": 3 },
+                    { "4笔": 4},
+                    { "5笔": 5 },
+                    { "6笔": 6 },
+                    { "7笔": 7 },
+                    { "8笔": 8 },
+                    { "9笔": 9 },
+                    { "10笔": 10 },
+                    { "15笔": 15 },
+                    { "20笔": 20 },
                 ],
                 data_weishu: [
                     { "1位": 1 },
@@ -427,7 +432,7 @@
                     { "4位": 4 },
                     { "5位": 5 },
                     { "6位": 6 },
-                    { "6位": 7 }
+                    { "7位": 7 }
                 ],
                 data_moweishu: [
                     { "1位": 1 },
@@ -478,8 +483,8 @@
                 _middlecontenthtm.append(_middletophtm);
                 var _middlebottomhtm = $("<div class='middlebottom'></div>");
                 var _asked = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>查看答案</div></div></div>");
-                var _resetconfig = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>重置配置</div></div></div>");
-                var _nextlx = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>继续答题</div></div></div>");
+                var _resetconfig = $("<div id='bt_reset' class='btitem'><div class='mybt'><div class='bttext'>重置配置</div></div></div>");
+                var _nextlx = $("<div id='bt_next' class='btitem'><div class='mybt'><div class='bttext'>继续答题</div></div></div>");
                 _middlebottomhtm.append(_asked);
                 _middlebottomhtm.append(_resetconfig);
                 _middlebottomhtm.append(_nextlx);
@@ -590,11 +595,29 @@
             initbtevent: function () {
                 $("#bt_start").on("click", function () {
                     $("#configpanel").hide();
+                    $(".showtoppanel").html("");
+                    _global_pagezxsobj.gcountnum = 0;
+                    _global_pagezxsobj.glistnum = [];
+                    _global_pagezxsobj._globalconfigpara = _global_pagezxsobj.getconfigparameterobj();
+                    _global_pagezxsobj.jiafa();
+                    //var _configobj = _global_pagezxsobj.getconfigparameterobj();
+                    //console.log(JSON.stringify(_configobj));
                 });
 
                 $("#bt_ckda").on("click", function () {
-                    _global_pagezxsobj.tts();
+                    var _glistnum = _global_pagezxsobj.glistnum;
+                    var allnum = 0;
+                    for (var i = 0; i < _glistnum.length; i++) {
+                        allnum += _glistnum[i];
+                    }
+                    $(".showtoppanel").eq(1).html(allnum);
+                    _global_pagezxsobj.tts(allnum, null);
+                });
+                $("#bt_reset").on("click", function () {
                     $("#configpanel").show();
+                });
+                $("#bt_next").on("click", function () {
+                    $("#bt_start").trigger("click");
                 });
                 $("#btyxswich").on("click", function (ev) {
                     var oEvent = ev || event;
@@ -609,10 +632,16 @@
                         $(this).attr("flag", "0");
                         $(this).css({ "background": "#fff" });
                         $(this).animate({ "left": "0" }, 200);
+                        //隐藏语声和语速
+                        $("#configitem2").hide();
+                        $("#configitem3").hide();
                     } else {
                         $(this).attr("flag", "1");
                         $(this).css({ "background": "#3ec400" });
                         $(this).animate({ "left": "1rem" }, 200);
+                        //显示语声和语速
+                        $("#configitem2").show();
+                        $("#configitem3").show();
                     }
                 });
                 $("#zhezhaopanel").on("click", function (ev) {
@@ -633,14 +662,12 @@
                     var _this = $(this);
                     if (_this.parent().prop("id") =='configitem1') { return; }
                     var _cvalue = _this.find("div").attr("cvalue");
-                    //alert(_this.find("div").html() + "|" + _cvalue);
                     _global_pagezxsobj.initconfigselect(_this.parent().prop("id"), _cvalue);
                 });
                 $(".configitem_sub3").on("click", function () {
                     var _this = $(this).prev();
                     if (_this.parent().prop("id") == 'configitem1') { return; }
                     var _cvalue = _this.find("div").attr("cvalue");
-                    //alert(_this.find("div").html() + "|" + _cvalue);
                     _global_pagezxsobj.initconfigselect(_this.parent().prop("id"),_cvalue);
                 });
             },
@@ -661,6 +688,7 @@
             },
             initconfigselect: function (id,cvalue) {
                 $(".zhezhaopanelsubbody").html("");
+                _global_pagezxsobj._globalguizeid = id;
                 switch (id) {
                     case "configitem0":
                         _global_pagezxsobj.initconfig("选择题库", cvalue, _global_pagezxsobj.gstaticdata.data_tiku);
@@ -698,12 +726,21 @@
                     $("#" + myid).find(".configitemcontentright").eq(0).html("<i class='zxsiconfont zxsicon-duihao7 duihao'></i>");
                     $("#" + id).find(".configfont").html($(this).find(".configitemcontentleft").html());
                     $("#" + id).find(".configfont").attr("cvalue", $(this).find(".configitemcontentleft").attr("vvalue"));
+                    //乘法和除法单独处理
+                    if ($("#configitem4").find(".configfont").html() == "乘法" || $("#configitem4").find(".configfont").html() == "除法") {
+                        $("#configitem5").hide();
+                        $("#configitem6").hide();
+                        $("#configitem7").show();
+                        $("#configitem8").show();
+                    } else {
+                        $("#configitem5").show();
+                        $("#configitem6").show();
+                        $("#configitem7").hide();
+                        $("#configitem8").hide();
+                    }
                     _global_pagezxsobj.closezhezhao();
                 });
                 _global_pagezxsobj.showzhezhao();
-            },
-            jiafa: function () {
-
             },
             initconfig: function (title, cvalue,obj) {
                 $(".zhezhaopanelsubtitle_left").eq(0).html(title);
@@ -727,8 +764,31 @@
                     $(".zhezhaopanelsubbody").append(_itemtemphtml);
                 }
             },
-            tts: function () {
-                let text = "7754986";
+            getconfigparameterobj: function () {
+                var _obj = {};
+                _obj.tiku = $("#configitem0").find(".configfont").attr("cvalue");
+                _obj.yuyin = $("#btyxswich").attr("flag");
+                _obj.yusheng = $("#configitem2").find(".configfont").attr("cvalue");
+                _obj.yusu = $("#configitem3").find(".configfont").attr("cvalue");
+                _obj.guize = $("#configitem4").find(".configfont").attr("cvalue");
+                _obj.bishu = $("#configitem5").find(".configfont").attr("cvalue");
+                _obj.weishu = $("#configitem6").find(".configfont").attr("cvalue");
+                _obj.shouweishu = $("#configitem7").find(".configfont").attr("cvalue");
+                _obj.moweishu = $("#configitem8").find(".configfont").attr("cvalue");
+                _obj.shijian = $("#configitem9").find(".configfont").attr("cvalue");
+                return _obj;
+            },
+            gcountnum: 0,
+            glistnum:[],
+            jiafa: function () {
+                //获得随机数
+                var _num = _global_pagezxsobj.getrandomnum(50, 500);
+                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                $(".showtoppanel").eq(1).html(_num);
+                _global_pagezxsobj.tts(_num, _global_pagezxsobj.jiafa);
+            },
+            tts: function (num,func) {
+                let text = num;
                 //playBtn.innerText = '准备中';
                 // 调用语音合成接口
                 // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
@@ -754,6 +814,14 @@
                             audio.play();
                             audio.addEventListener('ended', function () {
                                 console.log("播放完毕：" + (new Date()).getTime(), 'ended');
+                                _global_pagezxsobj.gcountnum++;
+                                if (func) {
+                                    if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
+                                        setTimeout(function () { func(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                                    } else {
+                                        setTimeout(function () { $(".showtoppanel").eq(1).html("答案？"); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                                    }
+                                }
                             }, false);
                         },
                         onError: function (text) {
