@@ -463,7 +463,7 @@
                 var _pagepanelhtm = $("<div class='pagepanel'></div>");
                 _pagepanelhtm.css({ "height": this._pageheight + "px" });
 
-                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i><span class='mytitletext'>XX</span></div></div>");
+                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i><span class='mytitletext'>闪算训练</span></div></div>");
                 _pagepanelhtm.append(_topbarhtm);
 
                 var _middlecontenthtm = $("<div class='middlecontent'></div>");
@@ -601,8 +601,6 @@
                         return;
                     }
                     _global_pagezxsobj._globalflag = true;
-                    $(".mytitletext").html("A:" + _global_pagezxsobj.gcountnum);
-                    $("#configpanel").hide();
                     $(".bttext").css({ "color":"#5d6564"});
                     $(".showtoppanel").html("");
                     _global_pagezxsobj.gcountnum = 0;
@@ -644,6 +642,7 @@
                                 break;
                         }
                     }
+                    $("#configpanel").hide();
                 });
 
                 $("#bt_ckda").on("click", function () {
@@ -652,7 +651,6 @@
                         return;
                     }
                     _global_pagezxsobj._globalflag = true;
-                    $(".mytitletext").html("B:"+_global_pagezxsobj.gcountnum);
                     var _glistnum = _global_pagezxsobj.glistnum;
                     var allnum = 0;
                     switch (_global_pagezxsobj._globalconfigpara.guize) {
@@ -681,7 +679,7 @@
                         $(".showtoppanel").eq(1).css({ "font-size": "4.1rem" });
                     }
                     if (_global_pagezxsobj._globalconfigpara.yuyin == "1") {
-                        _global_pagezxsobj.tts("答案："+allnum, null,true);
+                        _global_pagezxsobj.tts("答案：" + ("" + allnum).replace("-", "负"), null,true);
                     }
                     _global_pagezxsobj._globalflag = false;
                 });
@@ -867,10 +865,13 @@
                 var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
                 var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
                 _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                var _shownum = "";
                 if (_global_pagezxsobj.gcountnum % 2 != 0) {
-                    _num = "<span style='color:yellow;'>" + _num+"</span>";
+                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
+                } else {
+                    _shownum = _num;
                 }
-                $(".showtoppanel").eq(1).html(_num);
+                $(".showtoppanel").eq(1).html(_shownum);
                 _global_pagezxsobj.tts(_num, _global_pagezxsobj.jiafa);
             },
             jiafaonlyview: function () {
@@ -878,10 +879,13 @@
                 var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
                 var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
                 _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                var _shownum = "";
                 if (_global_pagezxsobj.gcountnum % 2 != 0) {
-                    _num = "<span style='color:yellow;'>" + _num + "</span>";
+                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
+                } else {
+                    _shownum = _num;
                 }
-                $(".showtoppanel").eq(1).html(_num);
+                $(".showtoppanel").eq(1).html(_shownum);
                 _global_pagezxsobj.gcountnum++;
                 if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
                     setTimeout(function () { _global_pagezxsobj.jiafaonlyview(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
@@ -904,11 +908,14 @@
                 }
                 _num = parseInt((tflag + _num), 10);
                 _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                var _shownum = "";
                 if (_global_pagezxsobj.gcountnum % 2 != 0) {
-                    _num = "<span style='color:yellow;'>" + _num + "</span>";
+                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
+                } else {
+                    _shownum = _num;
                 }
-                $(".showtoppanel").eq(1).html(_num);
-                _global_pagezxsobj.tts(_num, _global_pagezxsobj.jiajianfa);
+                $(".showtoppanel").eq(1).html(_shownum);
+                _global_pagezxsobj.tts((""+_num).replace("-","负"), _global_pagezxsobj.jiajianfa);
             },
             jiajianfaonlyview: function () {
                 //获得随机数
@@ -921,10 +928,13 @@
                 }
                 _num = parseInt((tflag + _num), 10);
                 _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                var _shownum = "";
                 if (_global_pagezxsobj.gcountnum % 2 != 0) {
-                    _num = "<span style='color:yellow;'>" + _num + "</span>";
+                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
+                } else {
+                    _shownum = _num;
                 }
-                $(".showtoppanel").eq(1).html(_num);
+                $(".showtoppanel").eq(1).html(_shownum);
                 _global_pagezxsobj.gcountnum++;
                 if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
                     setTimeout(function () { _global_pagezxsobj.jiajianfaonlyview(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
@@ -1013,7 +1023,6 @@
                                     var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
                                     _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)): 0;
                                     console.log("真实毫秒数：" + _paradate);
-                                    $(".mytitletext").html("C:" + _global_pagezxsobj.gcountnum);
                                     if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
                                         setTimeout(function () { func(); }, _paradate);
                                     } else {
