@@ -27,7 +27,7 @@
         }
 
         body {
-            background-color: #830101;
+            background-color: #12285e;
         }
 
         .icon {
@@ -90,7 +90,6 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            min-height:19rem;
         }
 
         .middlebottom {
@@ -117,7 +116,7 @@
             display: flex;
             border-radius: 5px;
             border: 1px solid #fff;
-            box-shadow: #fff 2px 2px 5px;
+            box-shadow: #fff 0px 0px 8px inset;
             /*background-color: #f90303;*/
         }
 
@@ -219,7 +218,7 @@
         }
 
         .bt_start {
-            min-height:2.5rem;
+            min-height: 2.5rem;
             margin: auto;
             text-align: center;
             height: 70%;
@@ -228,7 +227,7 @@
             border-radius: 5px;
             display: -webkit-flex;
             display: flex;
-            background-color: #830101;
+            background-color: #12285e;
             min-height: 2.7rem;
         }
 
@@ -325,7 +324,7 @@
             background: -webkit-linear-gradient(left top, red, blue);
             background: -o-linear-gradient(bottom right, red, blue);
             background: -moz-linear-gradient(bottom right, red, blue);
-            background: linear-gradient(to bottom, #830101, #6e0c0c);
+            background: linear-gradient(to bottom, #12285e, #192345);
         }
 
         .zhezhaopanelsubtitle_left {
@@ -368,6 +367,9 @@
             color:#3ec400;
             font-size:2rem;
         }
+        .mytitletext{
+            letter-spacing:5px;
+        }
     </style>
     <script>
         // 初始化变量
@@ -380,7 +382,8 @@
             _pagewidth: 0,
             _pageheight: 0,
             _globalguizeid: "",
-            _globalconfigpara:null,
+            _globalconfigpara: null,
+            _globalflag: false,
             gflag: {
                 maxweishu: 1,
                 firstweishu: 1,
@@ -391,7 +394,7 @@
                 data_tiku: [{ "随机生成": "1" }, { "随机题库": "2" }],
                 data_yuyin: [{ "开启": "1" }, { "关闭": "2" }],
                 data_yusheng: [{ "女声": "1" }, { "男声": "2" }],
-                data_yusu: [{ "慢速": "1" }, { "正常": "2" }, { "快速": "3" }],
+                data_yusu: [{ "慢速": "2" }, { "正常": "5" }, { "快速": "10" }],
                 data_guize: [{ "加法": "1" }, { "加减法": "2" }, { "乘法": "3" }, { "除法": "4" }],
                 data_bishu: [
                     { "2笔": 2 },
@@ -460,7 +463,7 @@
                 var _pagepanelhtm = $("<div class='pagepanel'></div>");
                 _pagepanelhtm.css({ "height": this._pageheight + "px" });
 
-                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i>XXX</div></div>");
+                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i><span class='mytitletext'>XX</span></div></div>");
                 _pagepanelhtm.append(_topbarhtm);
 
                 var _middlecontenthtm = $("<div class='middlecontent'></div>");
@@ -520,7 +523,7 @@
                             break;
                         case 3:
                             _itemsub1.find("div").text("语速");
-                            _mytempcontaner = $("<div id='configyusu' cvalue='2' class='configfont' onclick='_global_pagezxsobj.showzhezhao();'>正常</div>");
+                            _mytempcontaner = $("<div id='configyusu' cvalue='5' class='configfont' onclick='_global_pagezxsobj.showzhezhao();'>正常</div>");
                             _itemsub2.append(_mytempcontaner);
                             break;
                         case 4:
@@ -594,29 +597,108 @@
             },
             initbtevent: function () {
                 $("#bt_start").on("click", function () {
+                    if (_global_pagezxsobj._globalflag) {
+                        return;
+                    }
+                    _global_pagezxsobj._globalflag = true;
+                    $(".mytitletext").html("A:" + _global_pagezxsobj.gcountnum);
                     $("#configpanel").hide();
+                    $(".bttext").css({ "color":"#5d6564"});
                     $(".showtoppanel").html("");
                     _global_pagezxsobj.gcountnum = 0;
                     _global_pagezxsobj.glistnum = [];
                     _global_pagezxsobj._globalconfigpara = _global_pagezxsobj.getconfigparameterobj();
-                    _global_pagezxsobj.jiafa();
-                    //var _configobj = _global_pagezxsobj.getconfigparameterobj();
-                    //console.log(JSON.stringify(_configobj));
+
+                    if (_global_pagezxsobj._globalconfigpara.yuyin == "0") {
+                        switch (_global_pagezxsobj._globalconfigpara.guize) {
+                            case "1":
+                                _global_pagezxsobj.jiafaonlyview();
+                                break;
+                            case "2":
+                                _global_pagezxsobj.jiajianfaonlyview();
+                                break;
+                            case "3":
+                                _global_pagezxsobj.chengfaonlyview();
+                                break;
+                            case "4":
+                                alert("除法...开发中...");
+                                _global_pagezxsobj._globalflag = false;
+                                return;
+                                break;
+                        }
+                    } else {
+                        switch (_global_pagezxsobj._globalconfigpara.guize) {
+                            case "1":
+                                _global_pagezxsobj.jiafa();
+                                break;
+                            case "2":
+                                _global_pagezxsobj.jiajianfa();
+                                break;
+                            case "3": 
+                                _global_pagezxsobj.chengfa();
+                                break;
+                            case "4":
+                                alert("除法...开发中...");
+                                _global_pagezxsobj._globalflag = false;
+                                return;
+                                break;
+                        }
+                    }
                 });
 
                 $("#bt_ckda").on("click", function () {
+                    if (_global_pagezxsobj._globalflag) {
+                        console.log("没有完成！");
+                        return;
+                    }
+                    _global_pagezxsobj._globalflag = true;
+                    $(".mytitletext").html("B:"+_global_pagezxsobj.gcountnum);
                     var _glistnum = _global_pagezxsobj.glistnum;
                     var allnum = 0;
-                    for (var i = 0; i < _glistnum.length; i++) {
-                        allnum += _glistnum[i];
+                    switch (_global_pagezxsobj._globalconfigpara.guize) {
+                        case "1":
+                        case "2":
+                            for (var i = 0; i < _glistnum.length; i++) {
+                                allnum += _glistnum[i];
+                            }
+                            break;
+                        case "3":
+                            allnum = 1;
+                            for (var i = 0; i < _glistnum.length; i++) {
+                                allnum = allnum*_glistnum[i];
+                            }
+                            break;
+                        case "4":
+                            alert("除法...开发中...");
+                            return;
+                            break;
                     }
+                    
                     $(".showtoppanel").eq(1).html(allnum);
-                    _global_pagezxsobj.tts(allnum, null);
+                    if (("" + allnum).length > 9) {
+                        $(".showtoppanel").eq(1).css({ "font-size": "3rem" });
+                    } else {
+                        $(".showtoppanel").eq(1).css({ "font-size": "4.1rem" });
+                    }
+                    if (_global_pagezxsobj._globalconfigpara.yuyin == "1") {
+                        _global_pagezxsobj.tts("答案："+allnum, null,true);
+                    }
+                    _global_pagezxsobj._globalflag = false;
                 });
                 $("#bt_reset").on("click", function () {
+                    if (_global_pagezxsobj._globalflag) {
+                        console.log("没有完成！");
+                        return;
+                    }
                     $("#configpanel").show();
+                    _global_pagezxsobj.gcountnum = 0;
+                    _global_pagezxsobj.glistnum = [];
                 });
                 $("#bt_next").on("click", function () {
+                    if (_global_pagezxsobj._globalflag) {
+                        console.log("没有完成！");
+                        return;
+                    }
                     $("#bt_start").trigger("click");
                 });
                 $("#btyxswich").on("click", function (ev) {
@@ -782,12 +864,121 @@
             glistnum:[],
             jiafa: function () {
                 //获得随机数
-                var _num = _global_pagezxsobj.getrandomnum(50, 500);
+                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
+                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
                 _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                if (_global_pagezxsobj.gcountnum % 2 != 0) {
+                    _num = "<span style='color:yellow;'>" + _num+"</span>";
+                }
                 $(".showtoppanel").eq(1).html(_num);
                 _global_pagezxsobj.tts(_num, _global_pagezxsobj.jiafa);
             },
-            tts: function (num,func) {
+            jiafaonlyview: function () {
+                //获得随机数
+                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
+                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
+                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                if (_global_pagezxsobj.gcountnum % 2 != 0) {
+                    _num = "<span style='color:yellow;'>" + _num + "</span>";
+                }
+                $(".showtoppanel").eq(1).html(_num);
+                _global_pagezxsobj.gcountnum++;
+                if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
+                    setTimeout(function () { _global_pagezxsobj.jiafaonlyview(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                } else {
+                    setTimeout(function () {
+                        $(".showtoppanel").eq(1).html("答案？");
+                        _global_pagezxsobj._globalflag = false;
+                        $(".bttext").css({ "color": "#fff" });
+                    }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                }
+            },
+            jiajianfa: function () {
+                //获得随机数
+                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
+                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
+                var tv = _global_pagezxsobj.getrandomnum(0, 9);
+                var tflag = "";
+                if ((tv == 2) || (tv == 5) || (tv == 7) || (tv == 9)) {
+                    tflag = "-";
+                }
+                _num = parseInt((tflag + _num), 10);
+                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                if (_global_pagezxsobj.gcountnum % 2 != 0) {
+                    _num = "<span style='color:yellow;'>" + _num + "</span>";
+                }
+                $(".showtoppanel").eq(1).html(_num);
+                _global_pagezxsobj.tts(_num, _global_pagezxsobj.jiajianfa);
+            },
+            jiajianfaonlyview: function () {
+                //获得随机数
+                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
+                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
+                var tv = _global_pagezxsobj.getrandomnum(0, 9);
+                var tflag = "";
+                if ((tv == 2) || (tv == 5) || (tv == 7) || (tv == 9)) {
+                    tflag = "-";
+                }
+                _num = parseInt((tflag + _num), 10);
+                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                if (_global_pagezxsobj.gcountnum % 2 != 0) {
+                    _num = "<span style='color:yellow;'>" + _num + "</span>";
+                }
+                $(".showtoppanel").eq(1).html(_num);
+                _global_pagezxsobj.gcountnum++;
+                if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
+                    setTimeout(function () { _global_pagezxsobj.jiajianfaonlyview(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                } else {
+                    setTimeout(function () {
+                        $(".showtoppanel").eq(1).html("答案？");
+                        _global_pagezxsobj._globalflag = false;
+                        $(".bttext").css({ "color": "#fff" });
+                    }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                }
+            },
+            chengfa: function () {
+                //获得随机数
+                var _randobj_begin = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10));
+                var _num_begin = _global_pagezxsobj.getrandomnum(_randobj_begin.min, _randobj_begin.max);
+                var _randobj_end = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
+                var _num_end = _global_pagezxsobj.getrandomnum(_randobj_end.min, _randobj_end.max);
+                _global_pagezxsobj.glistnum.push(parseInt(_num_begin, 10));
+                _global_pagezxsobj.glistnum.push(parseInt(_num_end, 10));
+                $(".showtoppanel").eq(0).html(_num_begin);
+                $(".showtoppanel").eq(1).html("×");
+                $(".showtoppanel").eq(2).html(_num_end);
+                _global_pagezxsobj.tts((_num_begin + "乘" + _num_end), null);
+            },
+            chengfaonlyview: function () {
+                //获得随机数
+                var _randobj_begin = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10));
+                var _num_begin = _global_pagezxsobj.getrandomnum(_randobj_begin.min, _randobj_begin.max);
+                var _randobj_end = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
+                var _num_end = _global_pagezxsobj.getrandomnum(_randobj_end.min, _randobj_end.max);
+                _global_pagezxsobj.glistnum.push(parseInt(_num_begin, 10));
+                _global_pagezxsobj.glistnum.push(parseInt(_num_end, 10));
+                $(".showtoppanel").eq(0).html(_num_begin);
+                $(".showtoppanel").eq(1).html("×");
+                $(".showtoppanel").eq(2).html(_num_end);
+                setTimeout(function () {
+                    $(".showtoppanel").html("");
+                    $(".showtoppanel").eq(1).html("答案？");
+                    _global_pagezxsobj._globalflag = false;
+                    $(".bttext").css({ "color": "#fff" });
+                }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+            },
+            getrandnum: function (type) {
+                if (type > 9) {
+                    type = 9;
+                }
+                if (type < 1) {
+                    type = 1;
+                }
+                var min = Math.pow(10, (type - 1));
+                var max = Math.pow(10, type);
+                return {"min":min,"max":max};
+            },
+            tts: function (num,func,isviewresult) {
                 let text = num;
                 //playBtn.innerText = '准备中';
                 // 调用语音合成接口
@@ -795,13 +986,13 @@
                 audio = btts({
                     tex: text,
                     tok: '24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118',
-                    spd: 5,
+                    spd: parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10),
                     pit: 5,
                     vol: 15,
-                    per: 3
+                    per: parseInt(_global_pagezxsobj._globalconfigpara.yusheng,10) - 1
                 }, {
                         volume: 0.3,
-                        autoDestory: true,
+                        autoDestory: false,
                         timeout: 10000,
                         hidden: true,
                         onInit: function (htmlAudioElement) {
@@ -811,24 +1002,46 @@
                             audio = htmlAudioElement;
                             //playBtn.innerText = '播放';
                             //play()；
+                            var sdata = new Date();
                             audio.play();
                             audio.addEventListener('ended', function () {
                                 console.log("播放完毕：" + (new Date()).getTime(), 'ended');
-                                _global_pagezxsobj.gcountnum++;
+                                var edata = new Date();
+                                console.log("毫秒数：" + (edata - sdata));
                                 if (func) {
+                                    _global_pagezxsobj.gcountnum++;
+                                    var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
+                                    _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)): 0;
+                                    console.log("真实毫秒数：" + _paradate);
+                                    $(".mytitletext").html("C:" + _global_pagezxsobj.gcountnum);
                                     if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
-                                        setTimeout(function () { func(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                                        setTimeout(function () { func(); }, _paradate);
                                     } else {
-                                        setTimeout(function () { $(".showtoppanel").eq(1).html("答案？"); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                                        setTimeout(function () {
+                                            $(".showtoppanel").eq(1).html("答案？");
+                                            _global_pagezxsobj._globalflag = false;
+                                            $(".bttext").css({ "color": "#fff" });
+                                        }, _paradate);
+                                    }
+                                } else {
+                                    if (!isviewresult) {
+                                        setTimeout(function () {
+                                            $(".showtoppanel").html("");
+                                            $(".showtoppanel").eq(1).html("答案？");
+                                            _global_pagezxsobj._globalflag = false;
+                                            $(".bttext").css({ "color": "#fff" });
+                                        }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
                                     }
                                 }
                             }, false);
                         },
                         onError: function (text) {
-                            alert(text)
+                            alert(text);
+                            _global_pagezxsobj.gcountnum = 0;
+                            _global_pagezxsobj.glistnum = [];
                         },
                         onTimeout: function () {
-                            alert('timeout')
+                            alert('timeout');
                         }
                     });
             }
