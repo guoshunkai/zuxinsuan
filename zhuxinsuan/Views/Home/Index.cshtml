@@ -343,6 +343,7 @@
             flex: 6;
             overflow-y: auto;
         }
+
         .configitemcontent {
             width: 100%;
             height: 3rem;
@@ -351,24 +352,28 @@
             border-bottom: 1px solid #ccc;
             display: -webkit-flex;
             display: flex;
-            align-items:center;
+            align-items: center;
         }
+
         .configitemcontentleft {
-            flex:9;
-            text-align:left;
-            padding-left:10px;
+            flex: 9;
+            text-align: left;
+            padding-left: 10px;
         }
+
         .configitemcontentright {
             flex: 1;
             text-align: right;
-            padding-right:10px;
+            padding-right: 10px;
         }
-        .duihao{
-            color:#3ec400;
-            font-size:2rem;
+
+        .duihao {
+            color: #3ec400;
+            font-size: 2rem;
         }
-        .mytitletext{
-            letter-spacing:5px;
+
+        .mytitletext {
+            letter-spacing: 5px;
         }
     </style>
     <script>
@@ -376,7 +381,72 @@
         var audio = null;
         var playBtn = null;
         $(document).ready(function () {
+
             _global_pagezxsobj.init();
+            $(".mytitletext").click(function () {
+                try {
+                    var tx1 = "http://tsn.baidu.com/text2audio?tex=%e7%99%be%e5%ba%a6%e4%bd%a0%e5%a5%bd&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
+                    tx1 = _global_pagezxsobj.geturl(encodeURIComponent("华为手机是垃圾！"), 5, 1);
+                    console.log(tx1);
+                    $("#audio").prop("src", tx1);
+                    var audio = $("#audio")[0];
+                    //audio.pause();
+                    var sdata = new Date();
+
+                    $("#audio").unbind("ended");
+                    $("#audio").on("ended", function (event) {
+                        var event = event || window.event;
+                        var target = event.target || event.srcElement;
+                        console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
+                        var edata = new Date();
+                        console.log("===tx1播放完毕毫秒数：" + (edata - sdata));
+                    });
+                    $("#audio").unbind("loadeddata");
+                    $("#audio").on("loadeddata", function (event) {
+                        var event = event || window.event;
+                        var target = event.target || event.srcElement;
+                        audio.play();
+                        console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
+                        var edata = new Date();
+                        console.log("===tx1加载完毕毫秒数：" + (edata - sdata));
+                    });
+                }
+                catch (e) {
+                    alert(e.message);
+                }
+                return;
+                addEvent(audio, 'ended', function (event) {
+                    var event = event || window.event;
+                    var target = event.target || event.srcElement;
+                    console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
+                    var edata = new Date();
+                    console.log("tx1毫秒数：" + (edata - sdata));
+                });
+                addEvent(audio, 'loadeddata', function (event) {
+                    var event = event || window.event;
+                    var target = event.target || event.srcElement;
+                    var edata = new Date();
+                    console.log("加载完毕毫秒数：" + (edata - sdata));
+                });
+            });
+            $(".configitem_sub1").click(function () {
+                var c11 = encodeURIComponent("郭顺开你好！3333");
+                var tx2 = "http://tsn.baidu.com/text2audio?tex=" + c11 + "&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
+                $("#audio").prop("src", tx2);
+                var audio = $("#audio")[0];
+                //audio.pause();
+                var sdata = new Date();
+                audio.play();
+                addEvent(audio, 'ended', function (event) {
+                    var event = event || window.event;
+                    var target = event.target || event.srcElement;
+                    console.log("tx2播放完毕：" + (new Date()).getTime(), 'ended');
+                    var edata = new Date();
+                    console.log("tx3毫秒数：" + (edata - sdata));
+                });
+            });
+
+            //return;
         });
         var _global_pagezxsobj = {
             _pagewidth: 0,
@@ -399,7 +469,7 @@
                 data_bishu: [
                     { "2笔": 2 },
                     { "3笔": 3 },
-                    { "4笔": 4},
+                    { "4笔": 4 },
                     { "5笔": 5 },
                     { "6笔": 6 },
                     { "7笔": 7 },
@@ -450,6 +520,20 @@
                 max = max + 1;
                 var w = max - min;
                 return parseInt(Math.random() * w + min, 10);
+            },
+            getchufanum: function (shouweishu, moweishu) {
+                var _randobj_moweishu = _global_pagezxsobj.getrandnum(parseInt(moweishu, 10));
+                //除数
+                var _chushu = _global_pagezxsobj.getrandomnum(_randobj_moweishu.min, _randobj_moweishu.max);
+                //商最大临界值
+                var _bcsmax = Math.floor(Math.pow(10, shouweishu) / _chushu);
+                //商最小临界值
+                var _bcsmin = Math.ceil(Math.pow(10, (shouweishu - 1)) / _chushu);
+                //商
+                var _shang = _global_pagezxsobj.getrandomnum(_bcsmin, _bcsmax);
+                //被除数
+                var _bcs = _shang * _chushu;
+                return { "bcs": _bcs, "cs": _chushu, "shang": _shang };
             },
             init: function () {
                 this.initdata();
@@ -563,7 +647,7 @@
                     _configitem.append(_itemsub2);
                     _configitem.append(_itemsub3);
                     if (_gstyle) {
-                        _configitem.css({"display":"none"});
+                        _configitem.css({ "display": "none" });
                     }
                     _configpanel.append(_configitem);
                 }
@@ -601,7 +685,7 @@
                         return;
                     }
                     _global_pagezxsobj._globalflag = true;
-                    $(".bttext").css({ "color":"#5d6564"});
+                    $(".bttext").css({ "color": "#5d6564" });
                     $(".showtoppanel").html("");
                     _global_pagezxsobj.gcountnum = 0;
                     _global_pagezxsobj.glistnum = [];
@@ -619,9 +703,7 @@
                                 _global_pagezxsobj.chengfaonlyview();
                                 break;
                             case "4":
-                                alert("除法...开发中...");
-                                _global_pagezxsobj._globalflag = false;
-                                return;
+                                _global_pagezxsobj.chufaonlyview();
                                 break;
                         }
                     } else {
@@ -632,13 +714,11 @@
                             case "2":
                                 _global_pagezxsobj.jiajianfa();
                                 break;
-                            case "3": 
+                            case "3":
                                 _global_pagezxsobj.chengfa();
                                 break;
                             case "4":
-                                alert("除法...开发中...");
-                                _global_pagezxsobj._globalflag = false;
-                                return;
+                                _global_pagezxsobj.chufa();
                                 break;
                         }
                     }
@@ -663,15 +743,15 @@
                         case "3":
                             allnum = 1;
                             for (var i = 0; i < _glistnum.length; i++) {
-                                allnum = allnum*_glistnum[i];
+                                allnum = allnum * _glistnum[i];
                             }
                             break;
                         case "4":
-                            alert("除法...开发中...");
-                            return;
+                            allnum = 1;
+                            allnum = _glistnum[0] / _glistnum[1];
                             break;
                     }
-                    
+
                     $(".showtoppanel").eq(1).html(allnum);
                     if (("" + allnum).length > 9) {
                         $(".showtoppanel").eq(1).css({ "font-size": "3rem" });
@@ -679,7 +759,7 @@
                         $(".showtoppanel").eq(1).css({ "font-size": "4.1rem" });
                     }
                     if (_global_pagezxsobj._globalconfigpara.yuyin == "1") {
-                        _global_pagezxsobj.tts("答案：" + ("" + allnum).replace("-", "负"), null,true);
+                        _global_pagezxsobj.ttsself("答案：" + ("" + allnum).replace("-", "负"), null, true);
                     }
                     _global_pagezxsobj._globalflag = false;
                 });
@@ -740,7 +820,7 @@
                 });
                 $(".configitem_sub2").on("click", function () {
                     var _this = $(this);
-                    if (_this.parent().prop("id") =='configitem1') { return; }
+                    if (_this.parent().prop("id") == 'configitem1') { return; }
                     var _cvalue = _this.find("div").attr("cvalue");
                     _global_pagezxsobj.initconfigselect(_this.parent().prop("id"), _cvalue);
                 });
@@ -748,7 +828,7 @@
                     var _this = $(this).prev();
                     if (_this.parent().prop("id") == 'configitem1') { return; }
                     var _cvalue = _this.find("div").attr("cvalue");
-                    _global_pagezxsobj.initconfigselect(_this.parent().prop("id"),_cvalue);
+                    _global_pagezxsobj.initconfigselect(_this.parent().prop("id"), _cvalue);
                 });
             },
             showzhezhao: function () {
@@ -766,7 +846,7 @@
                     $("#zhezhaopanel").hide();
                 }, 301);
             },
-            initconfigselect: function (id,cvalue) {
+            initconfigselect: function (id, cvalue) {
                 $(".zhezhaopanelsubbody").html("");
                 _global_pagezxsobj._globalguizeid = id;
                 switch (id) {
@@ -822,7 +902,7 @@
                 });
                 _global_pagezxsobj.showzhezhao();
             },
-            initconfig: function (title, cvalue,obj) {
+            initconfig: function (title, cvalue, obj) {
                 $(".zhezhaopanelsubtitle_left").eq(0).html(title);
                 for (var i = 0; i < obj.length; i++) {
                     var _ttobj = obj[i];
@@ -859,7 +939,7 @@
                 return _obj;
             },
             gcountnum: 0,
-            glistnum:[],
+            glistnum: [],
             jiafa: function () {
                 //获得随机数
                 var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
@@ -872,7 +952,7 @@
                     _shownum = _num;
                 }
                 $(".showtoppanel").eq(1).html(_shownum);
-                _global_pagezxsobj.tts(_num, _global_pagezxsobj.jiafa);
+                _global_pagezxsobj.ttsself(_num, _global_pagezxsobj.jiafa);
             },
             jiafaonlyview: function () {
                 //获得随机数
@@ -915,7 +995,7 @@
                     _shownum = _num;
                 }
                 $(".showtoppanel").eq(1).html(_shownum);
-                _global_pagezxsobj.tts((""+_num).replace("-","负"), _global_pagezxsobj.jiajianfa);
+                _global_pagezxsobj.ttsself(("" + _num).replace("-", "负"), _global_pagezxsobj.jiajianfa);
             },
             jiajianfaonlyview: function () {
                 //获得随机数
@@ -957,7 +1037,7 @@
                 $(".showtoppanel").eq(0).html(_num_begin);
                 $(".showtoppanel").eq(1).html("×");
                 $(".showtoppanel").eq(2).html(_num_end);
-                _global_pagezxsobj.tts((_num_begin + "乘" + _num_end), null);
+                _global_pagezxsobj.ttsself((_num_begin + "乘" + _num_end), null);
             },
             chengfaonlyview: function () {
                 //获得随机数
@@ -977,6 +1057,29 @@
                     $(".bttext").css({ "color": "#fff" });
                 }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
             },
+            chufa: function () {
+                var _obj = _global_pagezxsobj.getchufanum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10), parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
+                _global_pagezxsobj.glistnum.push(parseInt(_obj.bcs, 10));
+                _global_pagezxsobj.glistnum.push(parseInt(_obj.cs, 10));
+                $(".showtoppanel").eq(0).html(_obj.bcs);
+                $(".showtoppanel").eq(1).html("÷");
+                $(".showtoppanel").eq(2).html(_obj.cs);
+                _global_pagezxsobj.ttsself((_obj.bcs + "除" + _obj.cs), null);
+            },
+            chufaonlyview: function () {
+                var _obj = _global_pagezxsobj.getchufanum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10), parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
+                _global_pagezxsobj.glistnum.push(parseInt(_obj.bcs, 10));
+                _global_pagezxsobj.glistnum.push(parseInt(_obj.cs, 10));
+                $(".showtoppanel").eq(0).html(_obj.bcs);
+                $(".showtoppanel").eq(1).html("÷");
+                $(".showtoppanel").eq(2).html(_obj.cs);
+                setTimeout(function () {
+                    $(".showtoppanel").html("");
+                    $(".showtoppanel").eq(1).html("答案？");
+                    _global_pagezxsobj._globalflag = false;
+                    $(".bttext").css({ "color": "#fff" });
+                }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+            },
             getrandnum: function (type) {
                 if (type > 9) {
                     type = 9;
@@ -986,77 +1089,167 @@
                 }
                 var min = Math.pow(10, (type - 1));
                 var max = Math.pow(10, type);
-                return {"min":min,"max":max};
+                return { "min": min, "max": max };
             },
-            tts: function (num,func,isviewresult) {
-                let text = num;
-                //playBtn.innerText = '准备中';
-                // 调用语音合成接口
-                // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
-                audio = btts({
-                    tex: text,
-                    tok: '24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118',
-                    spd: parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10),
-                    pit: 5,
-                    vol: 15,
-                    per: parseInt(_global_pagezxsobj._globalconfigpara.yusheng,10) - 1
-                }, {
-                        volume: 0.3,
-                        autoDestory: false,
-                        timeout: 10000,
-                        hidden: true,
-                        onInit: function (htmlAudioElement) {
+            geturl: function (num, yusu, yusheng) {
+                if (!num && num == '') {
+                    alert("语音文本不能为空！");
+                    return;
+                }
+                var spd = 5;
+                if (yusu) {
+                    spd = yusu;
+                }
+                var per = 0;
+                if (yusheng) {
+                    per = yusheng;
+                }
+                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118&spd=" + spd + "&per=" + per + "&tex=" + num;
+                return _resturl;
+            },
+            ttsself: function (num, func, isviewresult) {
+                var tx1 = "http://tsn.baidu.com/text2audio?tex=" + num + "&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
+                var _url = _global_pagezxsobj.geturl(encodeURIComponent(num), parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10), parseInt(_global_pagezxsobj._globalconfigpara.yusheng, 10) - 1);
+                $("#audio").prop("src", tx1);
+                var audio = $("#audio")[0];
+                var sdata = new Date();
+                try {
+                    $("#audio").unbind("loadeddata");
+                    $("#audio").on("loadeddata", function (event) {
+                        var event = event || window.event;
+                        var target = event.target || event.srcElement;
+                        audio.play();
+                        var edata = new Date();
+                        console.log("===加载完毕毫秒数：" + (edata - sdata));
+                        $("#audio").unbind("ended");
+                        $("#audio").on("ended", function (event) {
+                            var event = event || window.event;
+                            var target = event.target || event.srcElement;
+                            console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
+                            var edata = new Date();
+                            console.log("===tx1播放完毕毫秒数：" + (edata - sdata));
 
-                        },
-                        onSuccess: function (htmlAudioElement) {
-                            audio = htmlAudioElement;
-                            //playBtn.innerText = '播放';
-                            //play()；
-                            var sdata = new Date();
-                            audio.play();
-                            audio.addEventListener('ended', function () {
-                                console.log("播放完毕：" + (new Date()).getTime(), 'ended');
-                                var edata = new Date();
-                                console.log("毫秒数：" + (edata - sdata));
-                                if (func) {
-                                    _global_pagezxsobj.gcountnum++;
-                                    var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
-                                    _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)): 0;
-                                    console.log("真实毫秒数：" + _paradate);
-                                    if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
-                                        setTimeout(function () { func(); }, _paradate);
-                                    } else {
-                                        setTimeout(function () {
-                                            $(".showtoppanel").eq(1).html("答案？");
-                                            _global_pagezxsobj._globalflag = false;
-                                            $(".bttext").css({ "color": "#fff" });
-                                        }, _paradate);
-                                    }
+                            if (func) {
+                                _global_pagezxsobj.gcountnum++;
+                                var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
+                                _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)) : 0;
+                                console.log("真实毫秒数：" + _paradate);
+                                if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
+                                    setTimeout(function () { func(); }, _paradate);
                                 } else {
-                                    if (!isviewresult) {
-                                        setTimeout(function () {
-                                            $(".showtoppanel").html("");
-                                            $(".showtoppanel").eq(1).html("答案？");
-                                            _global_pagezxsobj._globalflag = false;
-                                            $(".bttext").css({ "color": "#fff" });
-                                        }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-                                    }
+                                    setTimeout(function () {
+                                        $(".showtoppanel").eq(1).html("答案？");
+                                        _global_pagezxsobj._globalflag = false;
+                                        $(".bttext").css({ "color": "#fff" });
+                                    }, _paradate);
                                 }
-                            }, false);
-                        },
-                        onError: function (text) {
-                            alert(text);
-                            _global_pagezxsobj.gcountnum = 0;
-                            _global_pagezxsobj.glistnum = [];
-                        },
-                        onTimeout: function () {
-                            alert('timeout');
-                        }
+                            } else {
+                                if (!isviewresult) {
+                                    setTimeout(function () {
+                                        $(".showtoppanel").html("");
+                                        $(".showtoppanel").eq(1).html("答案？");
+                                        _global_pagezxsobj._globalflag = false;
+                                        $(".bttext").css({ "color": "#fff" });
+                                    }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                                }
+                            }
+
+                        });
                     });
+                } catch (e) {
+                    alert("js外部错误:" + e.message);
+                }
+            },
+            tts: function (num, func, isviewresult) {
+                try {
+                    var text = num;
+                    //playBtn.innerText = '准备中';
+                    // 调用语音合成接口
+                    // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
+                    audio = btts({
+                        tex: text,
+                        tok: '24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118',
+                        spd: parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10),
+                        pit: 5,
+                        vol: 15,
+                        per: parseInt(_global_pagezxsobj._globalconfigpara.yusheng, 10) - 1
+                    }, {
+                            volume: 0.3,
+                            autoDestory: false,
+                            timeout: 10000,
+                            hidden: true,
+                            onInit: function (htmlAudioElement) {
+
+                            },
+                            onSuccess: function (htmlAudioElement) {
+                                audio = htmlAudioElement;
+                                //playBtn.innerText = '播放';
+                                //play()；
+                                var sdata = new Date();
+                                audio.play();
+                                try {
+                                    addEvent(audio, 'ended', function (event) {
+                                        var event = event || window.event;
+                                        var target = event.target || event.srcElement;
+                                        console.log("播放完毕：" + (new Date()).getTime(), 'ended');
+                                        var edata = new Date();
+                                        console.log("毫秒数：" + (edata - sdata));
+                                        if (func) {
+                                            _global_pagezxsobj.gcountnum++;
+                                            var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
+                                            _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)) : 0;
+                                            console.log("真实毫秒数：" + _paradate);
+                                            if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
+                                                setTimeout(function () { func(); }, _paradate);
+                                            } else {
+                                                setTimeout(function () {
+                                                    $(".showtoppanel").eq(1).html("答案？");
+                                                    _global_pagezxsobj._globalflag = false;
+                                                    $(".bttext").css({ "color": "#fff" });
+                                                }, _paradate);
+                                            }
+                                        } else {
+                                            if (!isviewresult) {
+                                                setTimeout(function () {
+                                                    $(".showtoppanel").html("");
+                                                    $(".showtoppanel").eq(1).html("答案？");
+                                                    _global_pagezxsobj._globalflag = false;
+                                                    $(".bttext").css({ "color": "#fff" });
+                                                }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+                                            }
+                                        }
+                                    });
+                                } catch (e) {
+                                    alert("js错误：" + e.message);
+                                }
+                            },
+                            onError: function (text) {
+                                alert(text);
+                                _global_pagezxsobj.gcountnum = 0;
+                                _global_pagezxsobj.glistnum = [];
+                            },
+                            onTimeout: function () {
+                                alert('timeout');
+                            }
+                        });
+                } catch (e) {
+                    alert("js外部错误:" + e.message);
+                }
             }
         };
+
+        var addEvent = function (element, type, callback) {
+            if (element.addEventListener) {
+                element.addEventListener(type, callback, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + type, callback)
+            }
+        }
     </script>
 </head>
 <body ontouchstart>
+    <audio id="audio" controls="controls" style="display:none;">
+        <source src="" type="audio/mpeg">
+    </audio>
 </body>
 </html>
