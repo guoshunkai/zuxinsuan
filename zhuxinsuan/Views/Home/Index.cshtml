@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_d0uys2bm6e.css" />
     <script src="http://at.alicdn.com/t/font_925002_d0uys2bm6e.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/baidu_tts_cors.js"></script>
+    @*<script type="text/javascript" src="~/Scripts/baidu_tts_cors.js"></script>*@
     <style>
         html, body {
             margin: 0;
@@ -386,12 +386,13 @@
             $(".mytitletext").click(function () {
                 try {
                     var tx1 = "http://tsn.baidu.com/text2audio?tex=%e7%99%be%e5%ba%a6%e4%bd%a0%e5%a5%bd&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
-                    tx1 = _global_pagezxsobj.geturl(encodeURIComponent("华为手机是垃圾！"), 5, 1);
-                    console.log(tx1);
+                    tx1 = _global_pagezxsobj.geturl(encodeURIComponent("好好学习，天天向上！"), 5, 4);
                     $("#audio").prop("src", tx1);
                     var audio = $("#audio")[0];
                     //audio.pause();
                     var sdata = new Date();
+                    audio.load();
+                    audio.play();
 
                     $("#audio").unbind("ended");
                     $("#audio").on("ended", function (event) {
@@ -405,7 +406,6 @@
                     $("#audio").on("loadeddata", function (event) {
                         var event = event || window.event;
                         var target = event.target || event.srcElement;
-                        audio.play();
                         console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
                         var edata = new Date();
                         console.log("===tx1加载完毕毫秒数：" + (edata - sdata));
@@ -414,37 +414,23 @@
                 catch (e) {
                     alert(e.message);
                 }
-                return;
-                addEvent(audio, 'ended', function (event) {
-                    var event = event || window.event;
-                    var target = event.target || event.srcElement;
-                    console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
-                    var edata = new Date();
-                    console.log("tx1毫秒数：" + (edata - sdata));
-                });
-                addEvent(audio, 'loadeddata', function (event) {
-                    var event = event || window.event;
-                    var target = event.target || event.srcElement;
-                    var edata = new Date();
-                    console.log("加载完毕毫秒数：" + (edata - sdata));
-                });
             });
-            $(".configitem_sub1").click(function () {
-                var c11 = encodeURIComponent("郭顺开你好！3333");
-                var tx2 = "http://tsn.baidu.com/text2audio?tex=" + c11 + "&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
-                $("#audio").prop("src", tx2);
-                var audio = $("#audio")[0];
-                //audio.pause();
-                var sdata = new Date();
-                audio.play();
-                addEvent(audio, 'ended', function (event) {
-                    var event = event || window.event;
-                    var target = event.target || event.srcElement;
-                    console.log("tx2播放完毕：" + (new Date()).getTime(), 'ended');
-                    var edata = new Date();
-                    console.log("tx3毫秒数：" + (edata - sdata));
-                });
-            });
+            //$(".configitem_sub1").click(function () {
+            //    var c11 = encodeURIComponent("郭顺开你好！3333");
+            //    var tx2 = "http://tsn.baidu.com/text2audio?tex=" + c11 + "&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
+            //    $("#audio").prop("src", tx2);
+            //    var audio = $("#audio")[0];
+            //    //audio.pause();
+            //    var sdata = new Date();
+            //    audio.play();
+            //    addEvent(audio, 'ended', function (event) {
+            //        var event = event || window.event;
+            //        var target = event.target || event.srcElement;
+            //        console.log("tx2播放完毕：" + (new Date()).getTime(), 'ended');
+            //        var edata = new Date();
+            //        console.log("tx3毫秒数：" + (edata - sdata));
+            //    });
+            //});
 
             //return;
         });
@@ -627,7 +613,7 @@
                             break;
                         case 7:
                             _itemsub1.find("div").text("首位数");
-                            _mytempcontaner = $("<div id='configshouweishu' cvalue='2' class='configfont'>2笔</div>");
+                            _mytempcontaner = $("<div id='configshouweishu' cvalue='2' class='configfont'>2位</div>");
                             _itemsub2.append(_mytempcontaner);
                             _gstyle = true;
                             break;
@@ -1104,36 +1090,36 @@
                 if (yusheng) {
                     per = yusheng;
                 }
-                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118&spd=" + spd + "&per=" + per + "&tex=" + num;
+                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118&spd=" + spd + "&per=" + per + "&tex=" + num + "&rdn=" + _global_pagezxsobj.getrandomnum(100,1000);
                 return _resturl;
             },
             ttsself: function (num, func, isviewresult) {
-                var tx1 = "http://tsn.baidu.com/text2audio?tex=" + num + "&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
                 var _url = _global_pagezxsobj.geturl(encodeURIComponent(num), parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10), parseInt(_global_pagezxsobj._globalconfigpara.yusheng, 10) - 1);
-                $("#audio").prop("src", tx1);
+                $("#audio").prop("src", _url);
                 var audio = $("#audio")[0];
                 var sdata = new Date();
                 try {
+                    audio.load();
+                    audio.play();
                     $("#audio").unbind("loadeddata");
                     $("#audio").on("loadeddata", function (event) {
                         var event = event || window.event;
                         var target = event.target || event.srcElement;
-                        audio.play();
                         var edata = new Date();
-                        console.log("===加载完毕毫秒数：" + (edata - sdata));
+                        //console.log("===加载完毕毫秒数：" + (edata - sdata));
                         $("#audio").unbind("ended");
                         $("#audio").on("ended", function (event) {
                             var event = event || window.event;
                             var target = event.target || event.srcElement;
-                            console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
+                            //console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
                             var edata = new Date();
-                            console.log("===tx1播放完毕毫秒数：" + (edata - sdata));
+                            //console.log("===tx1播放完毕毫秒数：" + (edata - sdata));
 
                             if (func) {
                                 _global_pagezxsobj.gcountnum++;
                                 var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
                                 _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)) : 0;
-                                console.log("真实毫秒数：" + _paradate);
+                                //console.log("真实毫秒数：" + _paradate);
                                 if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
                                     setTimeout(function () { func(); }, _paradate);
                                 } else {
@@ -1160,91 +1146,91 @@
                     alert("js外部错误:" + e.message);
                 }
             },
-            tts: function (num, func, isviewresult) {
-                try {
-                    var text = num;
-                    //playBtn.innerText = '准备中';
-                    // 调用语音合成接口
-                    // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
-                    audio = btts({
-                        tex: text,
-                        tok: '24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118',
-                        spd: parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10),
-                        pit: 5,
-                        vol: 15,
-                        per: parseInt(_global_pagezxsobj._globalconfigpara.yusheng, 10) - 1
-                    }, {
-                            volume: 0.3,
-                            autoDestory: false,
-                            timeout: 10000,
-                            hidden: true,
-                            onInit: function (htmlAudioElement) {
+            //tts: function (num, func, isviewresult) {
+            //    try {
+            //        var text = num;
+            //        //playBtn.innerText = '准备中';
+            //        // 调用语音合成接口
+            //        // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
+            //        audio = btts({
+            //            tex: text,
+            //            tok: '24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118',
+            //            spd: parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10),
+            //            pit: 5,
+            //            vol: 15,
+            //            per: parseInt(_global_pagezxsobj._globalconfigpara.yusheng, 10) - 1
+            //        }, {
+            //                volume: 0.3,
+            //                autoDestory: false,
+            //                timeout: 10000,
+            //                hidden: true,
+            //                onInit: function (htmlAudioElement) {
 
-                            },
-                            onSuccess: function (htmlAudioElement) {
-                                audio = htmlAudioElement;
-                                //playBtn.innerText = '播放';
-                                //play()；
-                                var sdata = new Date();
-                                audio.play();
-                                try {
-                                    addEvent(audio, 'ended', function (event) {
-                                        var event = event || window.event;
-                                        var target = event.target || event.srcElement;
-                                        console.log("播放完毕：" + (new Date()).getTime(), 'ended');
-                                        var edata = new Date();
-                                        console.log("毫秒数：" + (edata - sdata));
-                                        if (func) {
-                                            _global_pagezxsobj.gcountnum++;
-                                            var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
-                                            _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)) : 0;
-                                            console.log("真实毫秒数：" + _paradate);
-                                            if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
-                                                setTimeout(function () { func(); }, _paradate);
-                                            } else {
-                                                setTimeout(function () {
-                                                    $(".showtoppanel").eq(1).html("答案？");
-                                                    _global_pagezxsobj._globalflag = false;
-                                                    $(".bttext").css({ "color": "#fff" });
-                                                }, _paradate);
-                                            }
-                                        } else {
-                                            if (!isviewresult) {
-                                                setTimeout(function () {
-                                                    $(".showtoppanel").html("");
-                                                    $(".showtoppanel").eq(1).html("答案？");
-                                                    _global_pagezxsobj._globalflag = false;
-                                                    $(".bttext").css({ "color": "#fff" });
-                                                }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-                                            }
-                                        }
-                                    });
-                                } catch (e) {
-                                    alert("js错误：" + e.message);
-                                }
-                            },
-                            onError: function (text) {
-                                alert(text);
-                                _global_pagezxsobj.gcountnum = 0;
-                                _global_pagezxsobj.glistnum = [];
-                            },
-                            onTimeout: function () {
-                                alert('timeout');
-                            }
-                        });
-                } catch (e) {
-                    alert("js外部错误:" + e.message);
-                }
-            }
+            //                },
+            //                onSuccess: function (htmlAudioElement) {
+            //                    audio = htmlAudioElement;
+            //                    //playBtn.innerText = '播放';
+            //                    //play()；
+            //                    var sdata = new Date();
+            //                    audio.play();
+            //                    try {
+            //                        addEvent(audio, 'ended', function (event) {
+            //                            var event = event || window.event;
+            //                            var target = event.target || event.srcElement;
+            //                            console.log("播放完毕：" + (new Date()).getTime(), 'ended');
+            //                            var edata = new Date();
+            //                            console.log("毫秒数：" + (edata - sdata));
+            //                            if (func) {
+            //                                _global_pagezxsobj.gcountnum++;
+            //                                var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
+            //                                _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)) : 0;
+            //                                console.log("真实毫秒数：" + _paradate);
+            //                                if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
+            //                                    setTimeout(function () { func(); }, _paradate);
+            //                                } else {
+            //                                    setTimeout(function () {
+            //                                        $(".showtoppanel").eq(1).html("答案？");
+            //                                        _global_pagezxsobj._globalflag = false;
+            //                                        $(".bttext").css({ "color": "#fff" });
+            //                                    }, _paradate);
+            //                                }
+            //                            } else {
+            //                                if (!isviewresult) {
+            //                                    setTimeout(function () {
+            //                                        $(".showtoppanel").html("");
+            //                                        $(".showtoppanel").eq(1).html("答案？");
+            //                                        _global_pagezxsobj._globalflag = false;
+            //                                        $(".bttext").css({ "color": "#fff" });
+            //                                    }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
+            //                                }
+            //                            }
+            //                        });
+            //                    } catch (e) {
+            //                        alert("js错误：" + e.message);
+            //                    }
+            //                },
+            //                onError: function (text) {
+            //                    alert(text);
+            //                    _global_pagezxsobj.gcountnum = 0;
+            //                    _global_pagezxsobj.glistnum = [];
+            //                },
+            //                onTimeout: function () {
+            //                    alert('timeout');
+            //                }
+            //            });
+            //    } catch (e) {
+            //        alert("js外部错误:" + e.message);
+            //    }
+            //}
         };
 
-        var addEvent = function (element, type, callback) {
-            if (element.addEventListener) {
-                element.addEventListener(type, callback, false);
-            } else if (element.attachEvent) {
-                element.attachEvent('on' + type, callback)
-            }
-        }
+        //var addEvent = function (element, type, callback) {
+        //    if (element.addEventListener) {
+        //        element.addEventListener(type, callback, false);
+        //    } else if (element.attachEvent) {
+        //        element.attachEvent('on' + type, callback)
+        //    }
+        //}
     </script>
 </head>
 <body ontouchstart>

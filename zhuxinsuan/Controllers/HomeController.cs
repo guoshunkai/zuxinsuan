@@ -26,5 +26,11 @@ namespace zhuxinsuan.Controllers
 
             return View();
         }
+
+        public ActionResult gsk()
+        {
+
+            return View();
+        }
     }
 }
