@@ -14,10 +14,9 @@
     <meta name="applicable-device" content="mobile">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta http-equiv="Cache-Control" content="no-transform" />
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_d0uys2bm6e.css" />
-    <script src="http://at.alicdn.com/t/font_925002_d0uys2bm6e.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_nu81idm811f.css" />
+    <script src="http://at.alicdn.com/t/font_925002_nu81idm811f.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    @*<script type="text/javascript" src="~/Scripts/baidu_tts_cors.js"></script>*@
     <style>
         html, body {
             margin: 0;
@@ -118,6 +117,30 @@
             border: 1px solid #fff;
             box-shadow: #fff 0px 0px 8px inset;
             /*background-color: #f90303;*/
+            position: relative;
+        }
+
+        #detailpanel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2.8rem;
+            height: 100%;
+            z-index: 200;
+            flex: 1;
+            border-left: 1px solid #fff;
+            display:none;
+        }
+
+        #detailpanel i {
+            color:#fff;
+            font-size:1.5rem;
+        }
+        .listnum{
+            line-height:30px;
+            word-break:break-word;
+            font-size:1.2rem;
+            padding:10px;
         }
 
         .bttext {
@@ -555,7 +578,7 @@
                 _middletophtm.append(_showpanelfoothtm);
                 _middlecontenthtm.append(_middletophtm);
                 var _middlebottomhtm = $("<div class='middlebottom'></div>");
-                var _asked = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>查看答案</div></div></div>");
+                var _asked = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>查看答案</div><div id='detailpanel'><i class='zxsiconfont zxsicon-xiangqing'></i></div></div></div>");
                 var _resetconfig = $("<div id='bt_reset' class='btitem'><div class='mybt'><div class='bttext'>重置配置</div></div></div>");
                 var _nextlx = $("<div id='bt_next' class='btitem'><div class='mybt'><div class='bttext'>继续答题</div></div></div>");
                 _middlebottomhtm.append(_asked);
@@ -648,6 +671,8 @@
                 _pagepanelhtm.append(_footbarhtm);
 
                 $("body").append(_pagepanelhtm);
+                //计算
+                $("#detailpanel").css({ "height": (parseInt($("#bt_ckda").find(".mybt").height(), 10)) + "px", "line-height": (parseInt($("#bt_ckda").find(".mybt").height(), 10)) + "px" });
 
                 //遮罩
                 var _zhezhaopanel = $("<div class='zhezhaopanel' id='zhezhaopanel'></div>");
@@ -673,6 +698,7 @@
                     _global_pagezxsobj._globalflag = true;
                     $(".bttext").css({ "color": "#5d6564" });
                     $(".showtoppanel").html("");
+                    $("#detailpanel").hide();
                     _global_pagezxsobj.gcountnum = 0;
                     _global_pagezxsobj.glistnum = [];
                     _global_pagezxsobj._globalconfigpara = _global_pagezxsobj.getconfigparameterobj();
@@ -764,6 +790,53 @@
                         return;
                     }
                     $("#bt_start").trigger("click");
+                });
+                $("#detailpanel").on("click", function (ev) {
+                    var oEvent = ev || event;
+                    //js阻止事件冒泡
+                    oEvent.cancelBubble = true;
+                    oEvent.stopPropagation();
+                    $(".zhezhaopanelsubbody").html("");
+                    $(".zhezhaopanelsubtitle_left").eq(0).html("数据清单");
+
+                    if (_global_pagezxsobj._globalflag) {
+                        console.log("没有完成！");
+                        return;
+                    }
+                    _global_pagezxsobj._globalflag = true;
+                    var _glistnum = _global_pagezxsobj.glistnum;
+                    var allnum = 0;
+                    var alltext = "";
+                    switch (_global_pagezxsobj._globalconfigpara.guize) {
+                        case "1":
+                        case "2":
+                            for (var i = 0; i < _glistnum.length; i++) {
+                                allnum += _glistnum[i];
+                                if (alltext == "") {
+                                    alltext = _glistnum[i];
+                                } else {
+                                    var _tempv = _glistnum[i] >= 0 ? ("<span style='color:red'>+</span>" + _glistnum[i]) : ("" + _glistnum[i]).replace("-","<span style='color:red'>-</span>");
+                                    alltext += _tempv;
+                                }
+                            }
+                            break;
+                        case "3":
+                            allnum = 1;
+                            for (var i = 0; i < _glistnum.length; i++) {
+                                allnum = allnum * _glistnum[i];
+                            }
+                            alltext = _glistnum[0] +"<span style='color:red'>×</span>"+_glistnum[1];
+                            break;
+                        case "4":
+                            allnum = 1;
+                            allnum = _glistnum[0] / _glistnum[1];
+                            alltext = _glistnum[0] + "<span style='color:red'>÷</span>" + _glistnum[1];
+                            break;
+                    }
+
+                    $(".zhezhaopanelsubbody").append("<div class='listnum'>" + alltext +"<span style='color:red'>=</span><span style='color:#10d210;'>"+allnum+"</span></div>");
+                    _global_pagezxsobj._globalflag = false;
+                    _global_pagezxsobj.showzhezhao();
                 });
                 $("#btyxswich").on("click", function (ev) {
                     var oEvent = ev || event;
@@ -960,6 +1033,7 @@
                         $(".showtoppanel").eq(1).html("答案？");
                         _global_pagezxsobj._globalflag = false;
                         $(".bttext").css({ "color": "#fff" });
+                        $("#detailpanel").show();
                     }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
                 }
             },
@@ -1009,6 +1083,7 @@
                         $(".showtoppanel").eq(1).html("答案？");
                         _global_pagezxsobj._globalflag = false;
                         $(".bttext").css({ "color": "#fff" });
+                        $("#detailpanel").show();
                     }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
                 }
             },
@@ -1041,6 +1116,7 @@
                     $(".showtoppanel").eq(1).html("答案？");
                     _global_pagezxsobj._globalflag = false;
                     $(".bttext").css({ "color": "#fff" });
+                    $("#detailpanel").show();
                 }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
             },
             chufa: function () {
@@ -1064,6 +1140,7 @@
                     $(".showtoppanel").eq(1).html("答案？");
                     _global_pagezxsobj._globalflag = false;
                     $(".bttext").css({ "color": "#fff" });
+                    $("#detailpanel").show();
                 }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
             },
             getrandnum: function (type) {
@@ -1090,7 +1167,7 @@
                 if (yusheng) {
                     per = yusheng;
                 }
-                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118&spd=" + spd + "&per=" + per + "&tex=" + num + "&rdn=" + _global_pagezxsobj.getrandomnum(100,1000);
+                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118&spd=" + spd + "&per=" + per + "&tex=" + num + "&rdn=" + _global_pagezxsobj.getrandomnum(100, 1000);
                 return _resturl;
             },
             ttsself: function (num, func, isviewresult) {
@@ -1127,6 +1204,7 @@
                                         $(".showtoppanel").eq(1).html("答案？");
                                         _global_pagezxsobj._globalflag = false;
                                         $(".bttext").css({ "color": "#fff" });
+                                        $("#detailpanel").show();
                                     }, _paradate);
                                 }
                             } else {
@@ -1136,6 +1214,7 @@
                                         $(".showtoppanel").eq(1).html("答案？");
                                         _global_pagezxsobj._globalflag = false;
                                         $(".bttext").css({ "color": "#fff" });
+                                        $("#detailpanel").show();
                                     }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
                                 }
                             }
@@ -1224,13 +1303,13 @@
             //}
         };
 
-        //var addEvent = function (element, type, callback) {
-        //    if (element.addEventListener) {
-        //        element.addEventListener(type, callback, false);
-        //    } else if (element.attachEvent) {
-        //        element.attachEvent('on' + type, callback)
-        //    }
-        //}
+            //var addEvent = function (element, type, callback) {
+            //    if (element.addEventListener) {
+            //        element.addEventListener(type, callback, false);
+            //    } else if (element.attachEvent) {
+            //        element.attachEvent('on' + type, callback)
+            //    }
+            //}
     </script>
 </head>
 <body ontouchstart>
