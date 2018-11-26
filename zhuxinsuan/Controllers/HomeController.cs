@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using zhuxinsuan.Utils;
 
 namespace zhuxinsuan.Controllers
 {
@@ -10,6 +12,15 @@ namespace zhuxinsuan.Controllers
     {
         public ActionResult Index()
         {
+            try
+            {
+                sqllitehelper _sh = new sqllitehelper();
+                int db = _sh.InsertData();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return View();
         }
 
