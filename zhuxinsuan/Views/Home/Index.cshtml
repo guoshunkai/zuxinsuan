@@ -129,18 +129,19 @@
             z-index: 200;
             flex: 1;
             border-left: 1px solid #fff;
-            display:none;
+            display: none;
         }
 
-        #detailpanel i {
-            color:#fff;
-            font-size:1.5rem;
-        }
-        .listnum{
-            line-height:30px;
-            word-break:break-word;
-            font-size:1.2rem;
-            padding:10px;
+            #detailpanel i {
+                color: #fff;
+                font-size: 1.5rem;
+            }
+
+        .listnum {
+            line-height: 30px;
+            word-break: break-word;
+            font-size: 1.2rem;
+            padding: 10px;
         }
 
         .bttext {
@@ -667,7 +668,7 @@
                 _middlecontenthtm.append(_configpanel);
                 _pagepanelhtm.append(_middlecontenthtm);
 
-                var _footbarhtm = $("<div class='footbar'><div class='foottext'>更高 更快  更强<br/><div class='copyright'>copyright (c) 2018-2019</div></div></div>");
+                var _footbarhtm = $("<div class='footbar'><div class='foottext'>更高 更快  更强<br/><div class='copyright'>郑州星点教育  copyright (c) 2018-2019</div></div></div>");
                 _pagepanelhtm.append(_footbarhtm);
 
                 $("body").append(_pagepanelhtm);
@@ -1167,7 +1168,12 @@
                 if (yusheng) {
                     per = yusheng;
                 }
-                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118&spd=" + spd + "&per=" + per + "&tex=" + num + "&rdn=" + _global_pagezxsobj.getrandomnum(100, 1000);
+                var _token = "@ViewBag.bdyctoken";
+                if (!_token) {
+                    alert("token为空拒绝访问！");
+                    return;
+                }
+                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=" + _token+"&spd=" + spd + "&per=" + per + "&tex=" + num + "&rdn=" + _global_pagezxsobj.getrandomnum(100, 1000);
                 return _resturl;
             },
             ttsself: function (num, func, isviewresult) {

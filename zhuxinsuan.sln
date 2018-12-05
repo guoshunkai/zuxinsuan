@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zhuxinsuan", "zhuxinsuan\zhuxinsuan.csproj", "{ECC2D700-28E4-4756-87D4-684D2D00A97A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuaratJob", "QuaratJob\QuaratJob.csproj", "{E9C1B433-5E97-4357-8681-8044F880C614}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{ECC2D700-28E4-4756-87D4-684D2D00A97A}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{ECC2D700-28E4-4756-87D4-684D2D00A97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECC2D700-28E4-4756-87D4-684D2D00A97A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9C1B433-5E97-4357-8681-8044F880C614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9C1B433-5E97-4357-8681-8044F880C614}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9C1B433-5E97-4357-8681-8044F880C614}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9C1B433-5E97-4357-8681-8044F880C614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
