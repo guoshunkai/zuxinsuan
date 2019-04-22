@@ -403,6 +403,7 @@
         var audio = null;
         var playBtn = null;
         $(document).ready(function () {
+            return;
             _global_pagezxsobj.init();
             $(".mytitletext").click(function () {
                 try {
@@ -1266,21 +1267,22 @@
         }
 
             .sub1_1 div {
-                width: 42px;
+                /*width: 42px;*/
                 height: 42px;
                 /*border: 1px solid blue;*/
                 display: inline-block;
                 display: flex;
                 align-content: center;
                 justify-content: center;
+                margin-right:2px;
             }
 
                 .sub1_1 div > i {
                     color: red;
                 }
 
-            .sub1_2 div {
-                width: 42px;
+            .sub1_2 > div {
+                /*width: 42px;*/
                 height: 42px;
                 /*border: 1px solid blue;*/
                 display: inline-block;
@@ -1288,6 +1290,9 @@
                 align-content: center;
                 justify-content: center;
                 color: yellow;
+                margin-right: 2px;
+                position: relative;
+                -webkit-filter: grayscale(100%);
             }
 
                 .sub1_2 div > i {
@@ -1339,7 +1344,7 @@
             }
 
         .sysicon2 {
-            font-size: 2rem;
+            font-size: 1.9rem;
             color: #000;
         }
         .numcontentpanel {
@@ -1363,6 +1368,17 @@
             text-align: center;
             line-height: 2.9rem;
             z-index: 598;
+        }
+        .deleflag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 1px;
+            width: 35px;
+            transform-origin: top right;
+            transform: rotateZ(-45deg) translateX(-5px) translateY(2px);
+            background-color: #ccc;
+            -webkit-filter: grayscale(100%);
         }
     </style>
     <script>
@@ -1401,10 +1417,10 @@
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
                 </div>
                 <div class="sub1_2">
-                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
-                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
-                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
-                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
+                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i><div class="deleflag"></div></div>
+                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i><div class="deleflag"></div></div>
+                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i><div class="deleflag"></div></div>
+                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i><div class="deleflag"></div></div>
                 </div>
             </div>
             <div class="item">
@@ -1439,7 +1455,7 @@
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
                 </div>
                 <div class="sub1_2">
-                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
+                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i><div class="deleflag"></div></div>
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
                 </div>
             </div>
