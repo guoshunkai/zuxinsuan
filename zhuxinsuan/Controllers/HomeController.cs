@@ -66,6 +66,11 @@ namespace zhuxinsuan.Controllers
             return View();
         }
 
+        public ActionResult Plus()
+        {
+            return View();
+        }
+
         public ActionResult gsk()
         {
 
@@ -122,7 +127,7 @@ namespace zhuxinsuan.Controllers
             sqllitehelper _sh = new sqllitehelper();
             try
             {
-                bool re = _sh.updateorinserttoken();
+                bool re = _sh.updateorinserttoken("windowserver调用");
                 if (re)
                 {
                     httpResult.ErrorMessage = "更新token成功";

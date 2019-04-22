@@ -20,7 +20,7 @@ namespace zhuxinsuan
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             sqllitehelper _sh = new sqllitehelper();
-            bool re = _sh.updateorinserttoken();
+            bool re = _sh.updateorinserttoken("global初始化调用");
         }
     }
 }

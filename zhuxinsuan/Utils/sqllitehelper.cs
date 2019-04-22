@@ -113,7 +113,7 @@ namespace zhuxinsuan.Utils
             }
         }
 
-        public bool updateorinserttoken()
+        public bool updateorinserttoken(string type="null")
         {
             try
             {
@@ -138,10 +138,12 @@ namespace zhuxinsuan.Utils
                 }
                 Hashtable dic = Newtonsoft.Json.JsonConvert.DeserializeObject<Hashtable>(backstr);
                 this.InsertToken(dic["access_token"] != null ? dic["access_token"].ToString() : "");
+                this.InsertData(type);
                 return true;
             }
             catch (Exception ex)
             {
+                this.InsertData("sqllitehelper.updateorinserttoken执行出现异常"+ex.ToString());
                 return false;
             }
         }
