@@ -618,7 +618,7 @@
                             _global_pagefenchengobj.jiafa();
                             break;
                         case "2":
-                            //_global_pagefenchengobj.jianfa();
+                            _global_pagefenchengobj.jianfa();
                             break;
                     }
                     $(".numcontentpanel").show();
@@ -834,6 +834,8 @@
                 $(".numcontentpanel").html("");
                 for (var k = 0; k < _reallist.length; k++) {
                     var _outpanel = $("<div class=\"outpanel\"></div>");
+                    var _titlebg = $("<div class=\"titlebg\">第" + (k + 1) + "题</div>");
+                    _outpanel.append(_titlebg);
                     var _item1 = $("<div class=\"item\"></div>");
                     var _item1_sub1_1 = $("<div class=\"sub1_1\"></div>");
                     //得到随机图形
@@ -860,18 +862,18 @@
                         "</div>");
                     var _item3 = $("<div class=\"item\">" +
                         "<div class= \"sub3\" >" +
-                        "(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) +"</span>&nbsp;&nbsp;)" +
+                        "(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) + "</span>&nbsp;&nbsp;)" +
                         "</div >" +
                         "</div >");
                     var _item4 = $("<div class=\"item\">\
-                            <div class= \"sub4\" >\
-                            <div class=\"prenum\">(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) +"</span>&nbsp;&nbsp;)</div>\
-                            <div class=\"fuhao\">+</div>\
-                            <div class=\"endnum\">(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) +"</span>&nbsp;&nbsp;)</div>\
-                            <div class=\"denghao\">=</div>\
-                            <div class=\"jieguo\">(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) +"</span>&nbsp;&nbsp;)</div>\
-                            </div >\
-                            </div >");
+                                <div class= \"sub4\" >\
+                                <div class=\"prenum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) + "</span>&nbsp;&nbsp;</div>\
+                                <div class=\"fuhao\">+</div>\
+                                <div class=\"endnum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                <div class=\"denghao\">=</div>\
+                                <div class=\"jieguo\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                </div >\
+                                </div >");
                     var _item5 = $("<div class=\"item\"></div>");
                     _outpanel.append(_item2);
                     _outpanel.append(_item3);
@@ -881,23 +883,75 @@
                 }
             },
             jianfa: function () {
-                //获得随机数
-                var _randobj = _global_pagefenchengobj.getrandnum(parseInt(_global_pagefenchengobj._globalconfigpara.weishu, 10));
-                var _num = _global_pagefenchengobj.getrandomnum(_randobj.min, _randobj.max);
-                var tv = _global_pagefenchengobj.getrandomnum(0, 9);
-                var tflag = "";
-                if ((tv == 2) || (tv == 5) || (tv == 7) || (tv == 9)) {
-                    tflag = "-";
+                //生成所以组合数组
+                var _list_result = [];
+                //此处计算出来默认情况下（不重复最多能出几道题）
+                var _countnum = parseInt(_global_pagefenchengobj._globalconfigpara.tishu, 10);
+                for (var m = parseInt(_global_pagefenchengobj._globalconfigpara.xiaxian, 10); m <= parseInt(_global_pagefenchengobj._globalconfigpara.shangxian, 10); m++) {
+                    for (n = 1; n < m; n++) {
+                        var _obj = {};
+                        _obj["num1"] = n;
+                        _obj["num2"] = m - n;
+                        _list_result.push(_obj);
+                    }
                 }
-                _num = parseInt((tflag + _num), 10);
-                _global_pagefenchengobj.glistnum.push(parseInt(_num, 10));
-                var _shownum = "";
-                if (_global_pagefenchengobj.gcountnum % 2 != 0) {
-                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
-                } else {
-                    _shownum = _num;
+                var _reallist = [];
+                for (var i = 0; i < _countnum; i++) {
+                    var _randnum = _global_pagefenchengobj.getrandomnum(0, _list_result.length - 1);
+                    _reallist.push(_list_result[_randnum]);
                 }
-                $(".showtoppanel").eq(1).html(_shownum);
+                console.log(JSON.stringify(_reallist));
+                //初始化图形界面
+                $(".numcontentpanel").html("");
+                for (var k = 0; k < _reallist.length; k++) {
+                    var _outpanel = $("<div class=\"outpanel\"></div>");
+                    var _titlebg = $("<div class=\"titlebg\">第" + (k + 1) + "题</div>");
+                    _outpanel.append(_titlebg);
+                    var _item1 = $("<div class=\"item\"></div>");
+                    var _item1_sub1_1 = $("<div class=\"sub1_1\"></div>");
+                    //得到随机图形
+                    var _imgtx = _global_pagefenchengobj._gimgicon[_global_pagefenchengobj.getrandomnum(0, 24)];
+                    //左边初始化几个图形
+                    for (h = 0; h < _reallist[k].num1; h++) {
+                        var _left = $("<div><i class='iconfont_youer " + _imgtx + " sysicon2'></i></div>");
+                        _item1_sub1_1.append(_left);
+                    }
+                    var _item1_sub1_2 = $("<div class=\"sub1_2\"></div>");
+                    //右边初始化几个图形
+                    for (h = 0; h < _reallist[k].num2; h++) {
+                        var _left = $("<div><i class='iconfont_youer " + _imgtx + " sysicon2'></i><div class=\"deleflag\"></div></div>");
+                        _item1_sub1_2.append(_left);
+                    }
+                    _item1.append(_item1_sub1_1);
+                    _item1.append(_item1_sub1_2);
+                    _outpanel.append(_item1);
+                    var _item2 = $("<div class=\"item\">" +
+                        "<div class= \"sub2\" >" +
+                        "<div class=\"sub2_1\"></div>" +
+                        "<div class=\"sub2_2\"></div>" +
+                        "</div> " +
+                        "</div>");
+                    var _item3 = $("<div class=\"item\">" +
+                        "<div class= \"sub3\" >" +
+                        "(&nbsp;&nbsp;<span class='anwsernum'>" + _reallist[k].num1 + "</span>&nbsp;&nbsp;)" +
+                        "</div >" +
+                        "</div >");
+                    var _item4 = $("<div class=\"item\">\
+                                <div class= \"sub4\" >\
+                                <div class=\"prenum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                <div class=\"fuhao\">-</div>\
+                                <div class=\"endnum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                <div class=\"denghao\">=</div>\
+                                <div class=\"jieguo\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) + "</span>&nbsp;&nbsp;</div>\
+                                </div >\
+                                </div >");
+                    var _item5 = $("<div class=\"item\"></div>");
+                    _outpanel.append(_item2);
+                    _outpanel.append(_item3);
+                    _outpanel.append(_item4);
+                    _outpanel.append(_item5);
+                    $(".numcontentpanel").append(_outpanel);
+                }
             },
             getrandnum: function (type) {
                 if (type > 9) {
@@ -920,6 +974,9 @@
         .outpanel {
             width: 100%;
             color: #000;
+            position: relative;
+            left: 0;
+            top: 0;
         }
 
         .item {
@@ -969,7 +1026,7 @@
             }
 
             .sub1_2 div > i {
-                color: #1600ff;
+                color: #4bcc18;
             }
 
         .sub3 {
@@ -1061,10 +1118,11 @@
             line-height: 2.5rem;
             z-index: 601;
             display: none;
-            font-size:0.9rem;
+            font-size: 0.9rem;
         }
-        .anwsernum{
-            display:none;
+
+        .anwsernum {
+            display: none;
         }
 
         .deleflag {
@@ -1072,11 +1130,32 @@
             top: 0;
             right: 0;
             height: 1px;
-            width: 26px;
+            width: 27px;
             transform-origin: top right;
             transform: rotateZ(-45deg) translateX(-7px) translateY(4px);
-            background-color: #ccc;
+            background-color: #000;
             -webkit-filter: grayscale(100%);
+        }
+
+        .prenum, .endnum, .jieguo {
+            border: 1px solid #000;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+        }
+        .titlebg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 90%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 6rem;
+            transform: rotateZ(-20deg);
+            opacity: 0.3;
         }
     </style>
 </head>
@@ -1085,6 +1164,7 @@
     <div class="anwser">答案</div>
     <div class="numcontentpanel">
         <div class="outpanel">
+            <div class="titlebg">第一题</div>
             <div class="item">
                 <div class="sub1_1">
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
@@ -1115,11 +1195,11 @@
 
             <div class="item">
                 <div class="sub4">
-                    <div class="prenum">(&nbsp;&nbsp;&nbsp;&nbsp;)</div>
+                    <div class="prenum">&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     <div class="fuhao">+</div>
-                    <div class="endnum">(&nbsp;&nbsp;&nbsp;&nbsp;)</div>
+                    <div class="endnum">&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     <div class="denghao">=</div>
-                    <div class="jieguo">(&nbsp;&nbsp;&nbsp;&nbsp;)</div>
+                    <div class="jieguo">&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 </div>
             </div>
             <div class="item"></div>
@@ -1161,6 +1241,7 @@
             <div class="item"></div>
         </div>
         <div class="outpanel">
+            <div class="titlebg"></div>
             <div class="item">
                 <div class="sub1_1">
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
@@ -1270,5 +1351,6 @@
             </div>
             <div class="item"></div>
         </div>
+    </div>
 </body>
 </html>
