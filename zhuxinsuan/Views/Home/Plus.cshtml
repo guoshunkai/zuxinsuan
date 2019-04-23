@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_925002_nu81idm811f.css" />
     <script src="http://at.alicdn.com/t/font_925002_nu81idm811f.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1156689_179hlag6nki.css" />
     <style>
         html, body {
             margin: 0;
@@ -25,7 +26,9 @@
             overflow: hidden;
         }
 
-
+        body {
+            background-color: #12285e;
+        }
 
         .icon {
             width: 1em;
@@ -118,23 +121,6 @@
             position: relative;
         }
 
-        #detailpanel {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 2.8rem;
-            height: 100%;
-            z-index: 200;
-            flex: 1;
-            border-left: 1px solid #fff;
-            display: none;
-        }
-
-            #detailpanel i {
-                color: #fff;
-                font-size: 1.5rem;
-            }
-
         .listnum {
             line-height: 30px;
             word-break: break-word;
@@ -193,10 +179,11 @@
             display: -webkit-flex;
             display: flex;
             border-bottom: 1px solid #ccc;
+            max-height: 3rem;
         }
 
         .configitem_sub1 {
-            flex: 2;
+            flex: 2.5;
             display: -webkit-flex;
             display: flex;
             justify-content: flex-start;
@@ -204,7 +191,7 @@
         }
 
         .configitem_sub2 {
-            flex: 7;
+            flex: 6.5;
             display: -webkit-flex;
             display: flex;
             justify-content: flex-start;
@@ -251,6 +238,8 @@
             display: flex;
             background-color: #12285e;
             min-height: 2.7rem;
+            max-height: 3rem;
+            margin-top: 15px;
         }
 
         .bt_starttext {
@@ -296,17 +285,6 @@
             background-color: #e5e5e5;
             position: relative;
             border: 1px solid #ccc;
-        }
-
-        .btyxswich {
-            position: absolute;
-            top: 0;
-            left: 1rem;
-            height: 1.8rem;
-            width: 3rem;
-            background: #4fb121;
-            border-radius: 50px;
-            background-color: #3ec400;
         }
 
         .zhezhaopanel {
@@ -403,12 +381,11 @@
         var audio = null;
         var playBtn = null;
         $(document).ready(function () {
-            return;
-            _global_pagezxsobj.init();
+            _global_pagefenchengobj.init();
             $(".mytitletext").click(function () {
                 try {
                     var tx1 = "http://tsn.baidu.com/text2audio?tex=%e7%99%be%e5%ba%a6%e4%bd%a0%e5%a5%bd&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
-                    tx1 = _global_pagezxsobj.geturl(encodeURIComponent("好好学习，天天向上！"), 5, 4);
+                    tx1 = _global_pagefenchengobj.geturl(encodeURIComponent("好好学习，天天向上！"), 5, 4);
                     $("#audio").prop("src", tx1);
                     var audio = $("#audio")[0];
                     //audio.pause();
@@ -437,91 +414,43 @@
                     alert(e.message);
                 }
             });
-            //$(".configitem_sub1").click(function () {
-            //    var c11 = encodeURIComponent("郭顺开你好！3333");
-            //    var tx2 = "http://tsn.baidu.com/text2audio?tex=" + c11 + "&lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=24.95d1247f1165fb0b5eed036aaa29fc8f.2592000.1545056456.282335-14848118";
-            //    $("#audio").prop("src", tx2);
-            //    var audio = $("#audio")[0];
-            //    //audio.pause();
-            //    var sdata = new Date();
-            //    audio.play();
-            //    addEvent(audio, 'ended', function (event) {
-            //        var event = event || window.event;
-            //        var target = event.target || event.srcElement;
-            //        console.log("tx2播放完毕：" + (new Date()).getTime(), 'ended');
-            //        var edata = new Date();
-            //        console.log("tx3毫秒数：" + (edata - sdata));
-            //    });
-            //});
-
-            //return;
         });
-        var _global_pagezxsobj = {
+        var _global_pagefenchengobj = {
             _pagewidth: 0,
             _pageheight: 0,
             _globalguizeid: "",
             _globalconfigpara: null,
             _globalflag: false,
-            gflag: {
-                maxweishu: 1,
-                firstweishu: 1,
-                endweishu: 1,
-                countnum: 2
-            },
+            _gimgicon: ["icon_youerstar_full", "icon_youershouji", "icon_youerhongqi-copy", "icon_youerxin1", "icon_youeryuanquan1",
+                "icon_youerarrUp-fill", "icon_youericon-up1", "icon_youerpan_icon-copy", "icon_youertaozi", "icon_youerdangao",
+                "icon_youerxiangjiao", "icon_youerbiao", "icon_youerxiaolian1", "icon_youerhongqi", "icon_youerdao",
+                "icon_youertubiaoku-", "icon_youeryueliang1", "icon_youerkefu", "icon_youerqiqiu", "icon_youericonfontfuzhuangneiyi",
+                "icon_youergood", "icon_youericonfontzhaomingdianzi", "icon_youericonfontxiebaopeishi", "icon_youericonfontshipin", "icon_youerwxbbiaowang"],
             gstaticdata: {
-                data_tiku: [{ "随机生成": "1" }, { "随机题库": "2" }],
-                data_yuyin: [{ "开启": "1" }, { "关闭": "2" }],
-                data_yusheng: [{ "女声": "1" }, { "男声": "2" }],
-                data_yusu: [{ "慢速": "2" }, { "正常": "5" }, { "快速": "10" }],
-                data_guize: [{ "加法": "1" }, { "加减法": "2" }, { "乘法": "3" }, { "除法": "4" }],
-                data_bishu: [
-                    { "2笔": 2 },
-                    { "3笔": 3 },
-                    { "4笔": 4 },
-                    { "5笔": 5 },
-                    { "6笔": 6 },
-                    { "7笔": 7 },
-                    { "8笔": 8 },
-                    { "9笔": 9 },
-                    { "10笔": 10 },
-                    { "15笔": 15 },
-                    { "20笔": 20 },
+                data_guize: [{ "加法": "1" }, { "减法": "2" }],
+                data_sahngxian: [
+                    { "10以内": 10 },
+                    { "9以内": 9 },
+                    { "8以内": 8 },
+                    { "7以内": 7 },
+                    { "6以内": 6 },
+                    { "5以内": 5 },
+                    { "4以内": 4 },
+                    { "3以内": 3 },
+                    { "2以内": 2 }
                 ],
-                data_weishu: [
-                    { "1位": 1 },
-                    { "2位": 2 },
-                    { "3位": 3 },
-                    { "4位": 4 },
-                    { "5位": 5 },
-                    { "6位": 6 },
-                    { "7位": 7 },
-                    { "8位": 8 },
-                    { "9位": 9 }
+                data_xiaxian: [
+                    { "2以上": 2 },
+                    { "3以上": 3 },
+                    { "4以上": 4 },
+                    { "5以上": 5 },
+                    { "6以上": 6 },
+                    { "7以上": 7 },
+                    { "8以上": 8 },
+                    { "9以上": 9 }
                 ],
-                data_shijian1: [
-                    { "1秒": 1 },
-                    { "2秒": 2 },
-                    { "3秒": 3 },
-                    { "4秒": 4 },
-                    { "5秒": 5 },
-                    { "6秒": 6 },
-                    { "7秒": 7 }
-                ],
-                data_shouweishu: [
-                    { "2位": 2 },
-                    { "3位": 3 },
-                    { "4位": 4 },
-                    { "5位": 5 },
-                    { "6位": 6 },
-                    { "7位": 7 }
-                ],
-                data_moweishu: [
-                    { "1位": 1 },
-                    { "2位": 2 },
-                    { "3位": 3 },
-                    { "4位": 4 },
-                    { "5位": 5 },
-                    { "6位": 6 }
+                data_tishu: [
+                    { "1道": 1 }
                 ]
             },
             getrandomnum: function (min, max) {
@@ -530,15 +459,15 @@
                 return parseInt(Math.random() * w + min, 10);
             },
             getchufanum: function (shouweishu, moweishu) {
-                var _randobj_moweishu = _global_pagezxsobj.getrandnum(parseInt(moweishu, 10));
+                var _randobj_moweishu = _global_pagefenchengobj.getrandnum(parseInt(moweishu, 10));
                 //除数
-                var _chushu = _global_pagezxsobj.getrandomnum(_randobj_moweishu.min, _randobj_moweishu.max);
+                var _chushu = _global_pagefenchengobj.getrandomnum(_randobj_moweishu.min, _randobj_moweishu.max);
                 //商最大临界值
                 var _bcsmax = Math.floor(Math.pow(10, shouweishu) / _chushu);
                 //商最小临界值
                 var _bcsmin = Math.ceil(Math.pow(10, (shouweishu - 1)) / _chushu);
                 //商
-                var _shang = _global_pagezxsobj.getrandomnum(_bcsmin, _bcsmax);
+                var _shang = _global_pagefenchengobj.getrandomnum(_bcsmin, _bcsmax);
                 //被除数
                 var _bcs = _shang * _chushu;
                 return { "bcs": _bcs, "cs": _chushu, "shang": _shang };
@@ -552,10 +481,22 @@
                 this._pageheight = parseInt($(window).outerHeight(true), 10);
             },
             inithtml: function () {
+                //初始化返回按钮事件
+                $(".setconfig").on("click", function () {
+                    $(".setconfig").hide();
+                    $(".numcontentpanel").hide();
+                    $(".anwser").hide();
+                    _global_pagefenchengobj._globalflag = false;
+                });
+                $(".anwser").on("click", function () {
+                    $(".anwsernum").show()
+                });
+
+
                 var _pagepanelhtm = $("<div class='pagepanel'></div>");
                 _pagepanelhtm.css({ "height": this._pageheight + "px" });
 
-                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i><span class='mytitletext'>闪算训练</span></div></div>");
+                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i><span class='mytitletext'>分成题库</span></div></div>");
                 _pagepanelhtm.append(_topbarhtm);
 
                 var _middlecontenthtm = $("<div class='middlecontent'></div>");
@@ -577,78 +518,52 @@
                 _middletophtm.append(_showpanelfoothtm);
                 _middlecontenthtm.append(_middletophtm);
                 var _middlebottomhtm = $("<div class='middlebottom'></div>");
-                var _asked = $("<div id='bt_ckda' class='btitem'><div class='mybt'><div class='bttext'>查看答案</div><div id='detailpanel'><i class='zxsiconfont zxsicon-xiangqing'></i></div></div></div>");
                 var _resetconfig = $("<div id='bt_reset' class='btitem'><div class='mybt'><div class='bttext'>重置配置</div></div></div>");
-                var _nextlx = $("<div id='bt_next' class='btitem'><div class='mybt'><div class='bttext'>继续答题</div></div></div>");
-                _middlebottomhtm.append(_asked);
                 _middlebottomhtm.append(_resetconfig);
-                _middlebottomhtm.append(_nextlx);
 
                 _middlecontenthtm.append(_middlebottomhtm);
                 //设置配置层
                 _configpanel = $("<div id='configpanel' class=\"configpanel\"></div>");
-                //_configitem_top = $("<div class=\"configitem_top\"><div>参数设置</div></div>");
-                //_configpanel.append(_configitem_top);
-                for (var i = 0; i < 10; i++) {
+                for (var i = 0; i < 4; i++) {
                     var _configitem = $("<div id='configitem" + i + "' class=\"configitem\"></div>");
-                    var _itemsub1 = $("<div class=\"configitem_sub1\"><div class='cofigitemsubtext1'>题库</div></div>");
+                    var _itemsub1 = $("<div class=\"configitem_sub1\"><div class='cofigitemsubtext1'></div></div>");
                     var _itemsub2 = $("<div class=\"configitem_sub2\"></div>");
                     var _itemsub3 = $("<div class=\"configitem_sub3\"><div class='cofigitemsubtext3'><i class='zxsiconfont zxsicon-iconfontjiantou jiantou'></i></div></div>");
                     var _mytempcontaner = "";
                     var _gstyle = false;
                     switch (i) {
                         case 0:
-                            _itemsub1.find("div").text("题库");
-                            _mytempcontaner = $("<div class='configfont' cvalue='1'>随机生成</div>");
+                            _itemsub1.find("div").text("数字上限");
+                            _mytempcontaner = $("<div id='configszsx' class='configfont' cvalue='5'>5以下</div>");
                             _itemsub2.append(_mytempcontaner);
                             break;
                         case 1:
-                            _itemsub1.find("div").text("语音");
-                            _mytempcontaner = $("<div class='configfont btyuyin'><div class='btyxswich' flag='1' id='btyxswich'></div></div>");
+                            _itemsub1.find("div").text("数字下限");
+                            _mytempcontaner = $("<div id='configszxx' class='configfont' cvalue='2'>2以上</div>");
                             _itemsub2.append(_mytempcontaner);
-                            _itemsub3.find("div").html("");
                             break;
                         case 2:
-                            _itemsub1.find("div").text("语声");
-                            _mytempcontaner = $("<div id='configyusheng' class='configfont' cvalue='1'>女声</div>");
+                            _itemsub1.find("div").text("计算类型");
+                            _mytempcontaner = $("<div id='configjisuantype' class='configfont' cvalue='1'>加法</div>");
                             _itemsub2.append(_mytempcontaner);
                             break;
                         case 3:
-                            _itemsub1.find("div").text("语速");
-                            _mytempcontaner = $("<div id='configyusu' cvalue='5' class='configfont' onclick='_global_pagezxsobj.showzhezhao();'>正常</div>");
+                            _itemsub1.find("div").text("出题数目");
+                            //此处计算出来默认情况下（不重复最多能出几道题）
+                            var _countnum = 0;
+                            for (var m = 2; m <= 5; m++) {
+                                for (n = 0; n < m - 1; n++) {
+                                    _countnum++;
+                                }
+                            }
+                            _mytempcontaner = $("<div id='configtishu' class='configfont' cvalue='" + _countnum + "'>" + _countnum + "道题</div>");
                             _itemsub2.append(_mytempcontaner);
-                            break;
-                        case 4:
-                            _itemsub1.find("div").text("规则");
-                            _mytempcontaner = $("<div id='configguize' cvalue='1' class='configfont'>加法</div>");
-                            _itemsub2.append(_mytempcontaner);
-                            break;
-                        case 5:
-                            _itemsub1.find("div").text("笔数");
-                            _mytempcontaner = $("<div id='configbishu'  cvalue='2' class='configfont'>2笔</div>");
-                            _itemsub2.append(_mytempcontaner);
-                            break;
-                        case 6:
-                            _itemsub1.find("div").text("位数");
-                            _mytempcontaner = $("<div id='configweishu' cvalue='1' class='configfont'>1位</div>");
-                            _itemsub2.append(_mytempcontaner);
-                            break;
-                        case 7:
-                            _itemsub1.find("div").text("首位数");
-                            _mytempcontaner = $("<div id='configshouweishu' cvalue='2' class='configfont'>2位</div>");
-                            _itemsub2.append(_mytempcontaner);
-                            _gstyle = true;
-                            break;
-                        case 8:
-                            _itemsub1.find("div").text("末位数");
-                            _mytempcontaner = $("<div id='configmoweishu' cvalue='1' class='configfont'>1位</div>");
-                            _itemsub2.append(_mytempcontaner);
-                            _gstyle = true;
-                            break;
-                        case 9:
-                            _itemsub1.find("div").text("时间");
-                            _mytempcontaner = $("<div id='configshijian' cvalue='1' class='configfont'>1秒</div>");
-                            _itemsub2.append(_mytempcontaner);
+                            _global_pagefenchengobj.gstaticdata.data_tishu = [];
+                            for (var i = 1; i <= _countnum; i++) {
+                                var _obj = {};
+                                _obj[i + "道"] = i;
+                                _global_pagefenchengobj.gstaticdata.data_tishu.push(_obj);
+                            }
                             break;
                     }
                     _configitem.append(_itemsub1);
@@ -660,19 +575,16 @@
                     _configpanel.append(_configitem);
                 }
                 _configitem_foot = $("<div class=\"configitem_foot\"></div>");
-                _btstatrxunlian = $("<div id='bt_start' class=\"bt_start\"><div class='bt_starttext'>开始训练</div></div>");
+                _btstatrxunlian = $("<div id='bt_start' class=\"bt_start\"><div class='bt_starttext'>生成作业</div></div>");
                 _configitem_foot.append(_btstatrxunlian);
                 _configpanel.append(_configitem_foot);
                 _middlecontenthtm.append(_configpanel);
                 _pagepanelhtm.append(_middlecontenthtm);
 
-                var _footbarhtm = $("<div class='footbar'><div class='foottext'>更高 更快  更强<br/><div class='copyright'>郑州星点教育  copyright (c) 2018-2019</div></div></div>");
+                var _footbarhtm = $("<div class='footbar'><div class='foottext'>更高 更快  更强<br/><div class='copyright'>copyright (c) 2018-2019</div></div></div>");
                 _pagepanelhtm.append(_footbarhtm);
 
                 $("body").append(_pagepanelhtm);
-                //计算
-                $("#detailpanel").css({ "height": (parseInt($("#bt_ckda").find(".mybt").height(), 10)) + "px", "line-height": (parseInt($("#bt_ckda").find(".mybt").height(), 10)) + "px" });
-
                 //遮罩
                 var _zhezhaopanel = $("<div class='zhezhaopanel' id='zhezhaopanel'></div>");
                 var _zhezhaopanelsub = $("<div class='zhezhaopanelsub' id='zhezhaopanelsub'></div>");
@@ -691,176 +603,51 @@
             },
             initbtevent: function () {
                 $("#bt_start").on("click", function () {
-                    if (_global_pagezxsobj._globalflag) {
+                    if (_global_pagefenchengobj._globalflag) {
                         return;
                     }
-                    _global_pagezxsobj._globalflag = true;
+                    _global_pagefenchengobj._globalflag = true;
                     $(".bttext").css({ "color": "#5d6564" });
-                    $(".showtoppanel").html("");
-                    $("#detailpanel").hide();
-                    _global_pagezxsobj.gcountnum = 0;
-                    _global_pagezxsobj.glistnum = [];
-                    _global_pagezxsobj._globalconfigpara = _global_pagezxsobj.getconfigparameterobj();
+                    //$(".showtoppanel").html("");
+                    _global_pagefenchengobj.gcountnum = 0;
+                    _global_pagefenchengobj.glistnum = [];
+                    _global_pagefenchengobj._globalconfigpara = _global_pagefenchengobj.getconfigparameterobj();
 
-                    if (_global_pagezxsobj._globalconfigpara.yuyin == "0") {
-                        switch (_global_pagezxsobj._globalconfigpara.guize) {
-                            case "1":
-                                _global_pagezxsobj.jiafaonlyview();
-                                break;
-                            case "2":
-                                _global_pagezxsobj.jiajianfaonlyview();
-                                break;
-                            case "3":
-                                _global_pagezxsobj.chengfaonlyview();
-                                break;
-                            case "4":
-                                _global_pagezxsobj.chufaonlyview();
-                                break;
-                        }
-                    } else {
-                        switch (_global_pagezxsobj._globalconfigpara.guize) {
-                            case "1":
-                                _global_pagezxsobj.jiafa();
-                                break;
-                            case "2":
-                                _global_pagezxsobj.jiajianfa();
-                                break;
-                            case "3":
-                                _global_pagezxsobj.chengfa();
-                                break;
-                            case "4":
-                                _global_pagezxsobj.chufa();
-                                break;
-                        }
-                    }
-                    $("#configpanel").hide();
-                });
-
-                $("#bt_ckda").on("click", function () {
-                    if (_global_pagezxsobj._globalflag) {
-                        console.log("没有完成！");
-                        return;
-                    }
-                    _global_pagezxsobj._globalflag = true;
-                    var _glistnum = _global_pagezxsobj.glistnum;
-                    var allnum = 0;
-                    switch (_global_pagezxsobj._globalconfigpara.guize) {
+                    switch (_global_pagefenchengobj._globalconfigpara.guize) {
                         case "1":
+                            _global_pagefenchengobj.jiafa();
+                            break;
                         case "2":
-                            for (var i = 0; i < _glistnum.length; i++) {
-                                allnum += _glistnum[i];
-                            }
-                            break;
-                        case "3":
-                            allnum = 1;
-                            for (var i = 0; i < _glistnum.length; i++) {
-                                allnum = allnum * _glistnum[i];
-                            }
-                            break;
-                        case "4":
-                            allnum = 1;
-                            allnum = _glistnum[0] / _glistnum[1];
+                            //_global_pagefenchengobj.jianfa();
                             break;
                     }
+                    $(".numcontentpanel").show();
+                    $(".setconfig").show();
+                    $(".anwser").show();
+                    var _w_item = $(".item").width();
+                    console.log("_w_item:" + _w_item);
+                    var _h_item = $(".item").height() - 2;
+                    console.log("_h_item:" + _h_item);
+                    console.log("(_w_item / 4):" + (_w_item / 4));
+                    var _jd = Math.atan(_h_item / (_w_item / 4)) / (Math.PI / 180);
+                    console.log("_jd:" + _jd);
+                    var _l = Math.sqrt((_h_item * _h_item) + ((_w_item / 4) * (_w_item / 4)));
+                    var _x_py = _l - (_w_item / 4);
 
-                    $(".showtoppanel").eq(1).html(allnum);
-                    if (("" + allnum).length > 9) {
-                        $(".showtoppanel").eq(1).css({ "font-size": "3rem" });
-                    } else {
-                        $(".showtoppanel").eq(1).css({ "font-size": "4.1rem" });
-                    }
-                    if (_global_pagezxsobj._globalconfigpara.yuyin == "1") {
-                        _global_pagezxsobj.ttsself("答案：" + ("" + allnum).replace("-", "负"), null, true);
-                    }
-                    _global_pagezxsobj._globalflag = false;
+                    $(".sub2_1").css({ "width": _l + "px", "transform": "rotateZ(" + _jd + "deg) translateX(" + _x_py + "px)" });
+                    console.log("_l:" + _l);
+                    $(".sub2_2").css({
+                        "width": _l + "px", "transform": "rotateZ(" + -_jd + "deg) translateX(" + -_x_py + "px)"
+                    });
                 });
                 $("#bt_reset").on("click", function () {
-                    if (_global_pagezxsobj._globalflag) {
+                    if (_global_pagefenchengobj._globalflag) {
                         console.log("没有完成！");
                         return;
                     }
                     $("#configpanel").show();
-                    _global_pagezxsobj.gcountnum = 0;
-                    _global_pagezxsobj.glistnum = [];
-                });
-                $("#bt_next").on("click", function () {
-                    if (_global_pagezxsobj._globalflag) {
-                        console.log("没有完成！");
-                        return;
-                    }
-                    $("#bt_start").trigger("click");
-                });
-                $("#detailpanel").on("click", function (ev) {
-                    var oEvent = ev || event;
-                    //js阻止事件冒泡
-                    oEvent.cancelBubble = true;
-                    oEvent.stopPropagation();
-                    $(".zhezhaopanelsubbody").html("");
-                    $(".zhezhaopanelsubtitle_left").eq(0).html("数据清单");
-
-                    if (_global_pagezxsobj._globalflag) {
-                        console.log("没有完成！");
-                        return;
-                    }
-                    _global_pagezxsobj._globalflag = true;
-                    var _glistnum = _global_pagezxsobj.glistnum;
-                    var allnum = 0;
-                    var alltext = "";
-                    switch (_global_pagezxsobj._globalconfigpara.guize) {
-                        case "1":
-                        case "2":
-                            for (var i = 0; i < _glistnum.length; i++) {
-                                allnum += _glistnum[i];
-                                if (alltext == "") {
-                                    alltext = _glistnum[i];
-                                } else {
-                                    var _tempv = _glistnum[i] >= 0 ? ("<span style='color:red'>+</span>" + _glistnum[i]) : ("" + _glistnum[i]).replace("-","<span style='color:red'>-</span>");
-                                    alltext += _tempv;
-                                }
-                            }
-                            break;
-                        case "3":
-                            allnum = 1;
-                            for (var i = 0; i < _glistnum.length; i++) {
-                                allnum = allnum * _glistnum[i];
-                            }
-                            alltext = _glistnum[0] +"<span style='color:red'>×</span>"+_glistnum[1];
-                            break;
-                        case "4":
-                            allnum = 1;
-                            allnum = _glistnum[0] / _glistnum[1];
-                            alltext = _glistnum[0] + "<span style='color:red'>÷</span>" + _glistnum[1];
-                            break;
-                    }
-
-                    $(".zhezhaopanelsubbody").append("<div class='listnum'>" + alltext +"<span style='color:red'>=</span><span style='color:#10d210;'>"+allnum+"</span></div>");
-                    _global_pagezxsobj._globalflag = false;
-                    _global_pagezxsobj.showzhezhao();
-                });
-                $("#btyxswich").on("click", function (ev) {
-                    var oEvent = ev || event;
-                    //js阻止事件冒泡
-                    oEvent.cancelBubble = true;
-                    oEvent.stopPropagation();
-
-                    //js阻止链接默认行为，没有停止冒泡
-                    //oEvent.preventDefault();
-                    //return false;
-                    if ($(this).attr("flag") == "1") {
-                        $(this).attr("flag", "0");
-                        $(this).css({ "background": "#fff" });
-                        $(this).animate({ "left": "0" }, 200);
-                        //隐藏语声和语速
-                        $("#configitem2").hide();
-                        $("#configitem3").hide();
-                    } else {
-                        $(this).attr("flag", "1");
-                        $(this).css({ "background": "#3ec400" });
-                        $(this).animate({ "left": "1rem" }, 200);
-                        //显示语声和语速
-                        $("#configitem2").show();
-                        $("#configitem3").show();
-                    }
+                    _global_pagefenchengobj.gcountnum = 0;
+                    _global_pagefenchengobj.glistnum = [];
                 });
                 $("#zhezhaopanel").on("click", function (ev) {
                     var oEvent = ev || event;
@@ -871,22 +658,22 @@
                     //js阻止链接默认行为，没有停止冒泡
                     //oEvent.preventDefault();
                     //return false;
-                    _global_pagezxsobj.closezhezhao();
+                    _global_pagefenchengobj.closezhezhao();
                 });
                 $("#btclose").on("click", function () {
-                    _global_pagezxsobj.closezhezhao();
+                    _global_pagefenchengobj.closezhezhao();
                 });
+                //配置项左侧文字标题部分点击事件
                 $(".configitem_sub2").on("click", function () {
                     var _this = $(this);
-                    if (_this.parent().prop("id") == 'configitem1') { return; }
                     var _cvalue = _this.find("div").attr("cvalue");
-                    _global_pagezxsobj.initconfigselect(_this.parent().prop("id"), _cvalue);
+                    _global_pagefenchengobj.initconfigselect(_this.parent().prop("id"), _cvalue);
                 });
+                //配置项右侧箭头部分点击事件
                 $(".configitem_sub3").on("click", function () {
                     var _this = $(this).prev();
-                    if (_this.parent().prop("id") == 'configitem1') { return; }
                     var _cvalue = _this.find("div").attr("cvalue");
-                    _global_pagezxsobj.initconfigselect(_this.parent().prop("id"), _cvalue);
+                    _global_pagefenchengobj.initconfigselect(_this.parent().prop("id"), _cvalue);
                 });
             },
             showzhezhao: function () {
@@ -904,38 +691,25 @@
                     $("#zhezhaopanel").hide();
                 }, 301);
             },
+            //初始化单击每个配置项后底部弹出面板内容
             initconfigselect: function (id, cvalue) {
                 $(".zhezhaopanelsubbody").html("");
-                _global_pagezxsobj._globalguizeid = id;
+                _global_pagefenchengobj._globalguizeid = id;
                 switch (id) {
                     case "configitem0":
-                        _global_pagezxsobj.initconfig("选择题库", cvalue, _global_pagezxsobj.gstaticdata.data_tiku);
+                        _global_pagefenchengobj.initconfig("数字上限", cvalue, _global_pagefenchengobj.gstaticdata.data_sahngxian);
+                        break;
+                    case "configitem1":
+                        _global_pagefenchengobj.initconfig("数字下限", cvalue, _global_pagefenchengobj.gstaticdata.data_xiaxian);
                         break;
                     case "configitem2":
-                        _global_pagezxsobj.initconfig("语声切换", cvalue, _global_pagezxsobj.gstaticdata.data_yusheng);
+                        _global_pagefenchengobj.initconfig("计算类型", cvalue, _global_pagefenchengobj.gstaticdata.data_guize);
                         break;
                     case "configitem3":
-                        _global_pagezxsobj.initconfig("语速切换", cvalue, _global_pagezxsobj.gstaticdata.data_yusu);
-                        break;
-                    case "configitem4":
-                        _global_pagezxsobj.initconfig("规则切换", cvalue, _global_pagezxsobj.gstaticdata.data_guize);
-                        break;
-                    case "configitem5":
-                        _global_pagezxsobj.initconfig("笔数切换", cvalue, _global_pagezxsobj.gstaticdata.data_bishu);
-                        break;
-                    case "configitem6":
-                        _global_pagezxsobj.initconfig("位数切换", cvalue, _global_pagezxsobj.gstaticdata.data_weishu);
-                        break;
-                    case "configitem7":
-                        _global_pagezxsobj.initconfig("首位数切换", cvalue, _global_pagezxsobj.gstaticdata.data_shouweishu);
-                        break;
-                    case "configitem8":
-                        _global_pagezxsobj.initconfig("末位数切换", cvalue, _global_pagezxsobj.gstaticdata.data_moweishu);
-                        break;
-                    case "configitem9":
-                        _global_pagezxsobj.initconfig("时间切换", cvalue, _global_pagezxsobj.gstaticdata.data_shijian1);
+                        _global_pagefenchengobj.initconfig("题数", cvalue, _global_pagefenchengobj.gstaticdata.data_tishu);
                         break;
                 }
+                //点击面板某一项的事件
                 $(".configitemcontent").on("click", function () {
                     var myid = $(this).prop("id");
                     $(".configitemcontent").removeAttr("checked");
@@ -943,22 +717,68 @@
                     $(".configitemcontent").find(".configitemcontentright").html("");
                     $("#" + myid).find(".configitemcontentright").eq(0).html("<i class='zxsiconfont zxsicon-duihao7 duihao'></i>");
                     $("#" + id).find(".configfont").html($(this).find(".configitemcontentleft").html());
-                    $("#" + id).find(".configfont").attr("cvalue", $(this).find(".configitemcontentleft").attr("vvalue"));
-                    //乘法和除法单独处理
-                    if ($("#configitem4").find(".configfont").html() == "乘法" || $("#configitem4").find(".configfont").html() == "除法") {
-                        $("#configitem5").hide();
-                        $("#configitem6").hide();
-                        $("#configitem7").show();
-                        $("#configitem8").show();
-                    } else {
-                        $("#configitem5").show();
-                        $("#configitem6").show();
-                        $("#configitem7").hide();
-                        $("#configitem8").hide();
+                    var _value = $(this).find(".configitemcontentleft").attr("vvalue");
+                    $("#" + id).find(".configfont").attr("cvalue", _value);
+                    var _shangxianmum = 10;
+                    var _xiaxiannum = 2;
+                    //上限改变后，级联改动下限和题数选项数组
+                    if (id == 'configitem0') {
+                        _shangxianmum = parseInt(_value, 10);
+                        _xiaxiannum = parseInt($("#configszxx").attr("cvalue"), 10);
+                        _global_pagefenchengobj.gstaticdata.data_xiaxian = [];
+                        for (var i = 2; i < parseInt(_value, 10); i++) {
+                            var _key = i + "以上";
+                            var _objtemp = {};
+                            _objtemp[_key] = i;
+                            _global_pagefenchengobj.gstaticdata.data_xiaxian.push(_objtemp);
+                        }
+                        //此处计算出来默认情况下（不重复最多能出几道题）
+                        var _countnum = 0;
+                        for (var m = _xiaxiannum; m <= _shangxianmum; m++) {
+                            for (n = 0; n < (m - 1); n++) {
+                                _countnum++;
+                            }
+                        }
+                        $("#configtishu").html(_countnum + "道题");
+                        $("#configtishu").attr("cvalue", "" + _countnum + "");
+                        _global_pagefenchengobj.gstaticdata.data_tishu = [];
+                        for (var i = 1; i <= _countnum; i++) {
+                            var _obj = {};
+                            _obj[i + "道"] = i;
+                            _global_pagefenchengobj.gstaticdata.data_tishu.push(_obj);
+                        }
                     }
-                    _global_pagezxsobj.closezhezhao();
+                    //下限改变后，级联改动上限和题数选项数组
+                    if (id == 'configitem1') {
+                        _xiaxiannum = parseInt(_value, 10);
+                        _shangxianmum = parseInt($("#configszsx").attr("cvalue"), 10);
+                        _global_pagefenchengobj.gstaticdata.data_sahngxian = [];
+                        for (var i = (parseInt(_value, 10) + 1); i < 11; i++) {
+                            var _key = i + "以内";
+                            var _objtemp = {};
+                            _objtemp[_key] = i;
+                            _global_pagefenchengobj.gstaticdata.data_sahngxian.push(_objtemp);
+                        }
+                        //此处计算出来默认情况下（不重复最多能出几道题）
+                        var _countnum = 0;
+                        for (var m = _xiaxiannum; m <= _shangxianmum; m++) {
+                            for (n = 0; n < (m - 1); n++) {
+                                _countnum++;
+                            }
+                        }
+                        $("#configtishu").html(_countnum + "道题");
+                        $("#configtishu").attr("cvalue", "" + _countnum + "");
+                        _global_pagefenchengobj.gstaticdata.data_tishu = [];
+                        for (var i = 1; i <= _countnum; i++) {
+                            var _obj = {};
+                            _obj[i + "道"] = i;
+                            _global_pagefenchengobj.gstaticdata.data_tishu.push(_obj);
+                        }
+                    }
+
+                    _global_pagefenchengobj.closezhezhao();
                 });
-                _global_pagezxsobj.showzhezhao();
+                _global_pagefenchengobj.showzhezhao();
             },
             initconfig: function (title, cvalue, obj) {
                 $(".zhezhaopanelsubtitle_left").eq(0).html(title);
@@ -975,7 +795,6 @@
                             _itemtemphtmlsubright.append("<i class='zxsiconfont zxsicon-duihao7 duihao'></i>");
                             _itemtemphtml.attr("checked", true);
                         }
-
                     }
                     _itemtemphtml.append(_itemtemphtmlsubleft);
                     _itemtemphtml.append(_itemtemphtmlsubright);
@@ -984,163 +803,101 @@
             },
             getconfigparameterobj: function () {
                 var _obj = {};
-                _obj.tiku = $("#configitem0").find(".configfont").attr("cvalue");
-                _obj.yuyin = $("#btyxswich").attr("flag");
-                _obj.yusheng = $("#configitem2").find(".configfont").attr("cvalue");
-                _obj.yusu = $("#configitem3").find(".configfont").attr("cvalue");
-                _obj.guize = $("#configitem4").find(".configfont").attr("cvalue");
-                _obj.bishu = $("#configitem5").find(".configfont").attr("cvalue");
-                _obj.weishu = $("#configitem6").find(".configfont").attr("cvalue");
-                _obj.shouweishu = $("#configitem7").find(".configfont").attr("cvalue");
-                _obj.moweishu = $("#configitem8").find(".configfont").attr("cvalue");
-                _obj.shijian = $("#configitem9").find(".configfont").attr("cvalue");
+                _obj.shangxian = $("#configitem0").find(".configfont").attr("cvalue");
+                _obj.xiaxian = $("#configitem1").find(".configfont").attr("cvalue");
+                _obj.guize = $("#configitem2").find(".configfont").attr("cvalue");
+                _obj.tishu = $("#configitem3").find(".configfont").attr("cvalue");
                 return _obj;
             },
             gcountnum: 0,
             glistnum: [],
             jiafa: function () {
-                //获得随机数
-                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
-                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
-                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
-                var _shownum = "";
-                if (_global_pagezxsobj.gcountnum % 2 != 0) {
-                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
-                } else {
-                    _shownum = _num;
+                //生成所以组合数组
+                var _list_result = [];
+                //此处计算出来默认情况下（不重复最多能出几道题）
+                var _countnum = parseInt(_global_pagefenchengobj._globalconfigpara.tishu, 10);
+                for (var m = parseInt(_global_pagefenchengobj._globalconfigpara.xiaxian, 10); m <= parseInt(_global_pagefenchengobj._globalconfigpara.shangxian, 10); m++) {
+                    for (n = 1; n < m; n++) {
+                        var _obj = {};
+                        _obj["num1"] = n;
+                        _obj["num2"] = m - n;
+                        _list_result.push(_obj);
+                    }
                 }
-                $(".showtoppanel").eq(1).html(_shownum);
-                _global_pagezxsobj.ttsself(_num, _global_pagezxsobj.jiafa);
+                var _reallist = [];
+                for (var i = 0; i < _countnum; i++) {
+                    var _randnum = _global_pagefenchengobj.getrandomnum(0, _list_result.length - 1);
+                    _reallist.push(_list_result[_randnum]);
+                }
+                console.log(JSON.stringify(_reallist));
+                //初始化图形界面
+                $(".numcontentpanel").html("");
+                for (var k = 0; k < _reallist.length; k++) {
+                    var _outpanel = $("<div class=\"outpanel\"></div>");
+                    var _item1 = $("<div class=\"item\"></div>");
+                    var _item1_sub1_1 = $("<div class=\"sub1_1\"></div>");
+                    //得到随机图形
+                    var _imgtx = _global_pagefenchengobj._gimgicon[_global_pagefenchengobj.getrandomnum(0, 24)];
+                    //左边初始化几个图形
+                    for (h = 0; h < _reallist[k].num1; h++) {
+                        var _left = $("<div><i class='iconfont_youer " + _imgtx + " sysicon2'></i></div>");
+                        _item1_sub1_1.append(_left);
+                    }
+                    var _item1_sub1_2 = $("<div class=\"sub1_2\"></div>");
+                    //右边初始化几个图形
+                    for (h = 0; h < _reallist[k].num2; h++) {
+                        var _left = $("<div><i class='iconfont_youer " + _imgtx + " sysicon2'></i></div>");
+                        _item1_sub1_2.append(_left);
+                    }
+                    _item1.append(_item1_sub1_1);
+                    _item1.append(_item1_sub1_2);
+                    _outpanel.append(_item1);
+                    var _item2 = $("<div class=\"item\">" +
+                        "<div class= \"sub2\" >" +
+                        "<div class=\"sub2_1\"></div>" +
+                        "<div class=\"sub2_2\"></div>" +
+                        "</div> " +
+                        "</div>");
+                    var _item3 = $("<div class=\"item\">" +
+                        "<div class= \"sub3\" >" +
+                        "(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) +"</span>&nbsp;&nbsp;)" +
+                        "</div >" +
+                        "</div >");
+                    var _item4 = $("<div class=\"item\">\
+                            <div class= \"sub4\" >\
+                            <div class=\"prenum\">(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) +"</span>&nbsp;&nbsp;)</div>\
+                            <div class=\"fuhao\">+</div>\
+                            <div class=\"endnum\">(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) +"</span>&nbsp;&nbsp;)</div>\
+                            <div class=\"denghao\">=</div>\
+                            <div class=\"jieguo\">(&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) +"</span>&nbsp;&nbsp;)</div>\
+                            </div >\
+                            </div >");
+                    var _item5 = $("<div class=\"item\"></div>");
+                    _outpanel.append(_item2);
+                    _outpanel.append(_item3);
+                    _outpanel.append(_item4);
+                    _outpanel.append(_item5);
+                    $(".numcontentpanel").append(_outpanel);
+                }
             },
-            jiafaonlyview: function () {
+            jianfa: function () {
                 //获得随机数
-                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
-                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
-                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
-                var _shownum = "";
-                if (_global_pagezxsobj.gcountnum % 2 != 0) {
-                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
-                } else {
-                    _shownum = _num;
-                }
-                $(".showtoppanel").eq(1).html(_shownum);
-                _global_pagezxsobj.gcountnum++;
-                if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
-                    setTimeout(function () { _global_pagezxsobj.jiafaonlyview(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-                } else {
-                    setTimeout(function () {
-                        $(".showtoppanel").eq(1).html("答案？");
-                        _global_pagezxsobj._globalflag = false;
-                        $(".bttext").css({ "color": "#fff" });
-                        $("#detailpanel").show();
-                    }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-                }
-            },
-            jiajianfa: function () {
-                //获得随机数
-                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
-                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
-                var tv = _global_pagezxsobj.getrandomnum(0, 9);
+                var _randobj = _global_pagefenchengobj.getrandnum(parseInt(_global_pagefenchengobj._globalconfigpara.weishu, 10));
+                var _num = _global_pagefenchengobj.getrandomnum(_randobj.min, _randobj.max);
+                var tv = _global_pagefenchengobj.getrandomnum(0, 9);
                 var tflag = "";
                 if ((tv == 2) || (tv == 5) || (tv == 7) || (tv == 9)) {
                     tflag = "-";
                 }
                 _num = parseInt((tflag + _num), 10);
-                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
+                _global_pagefenchengobj.glistnum.push(parseInt(_num, 10));
                 var _shownum = "";
-                if (_global_pagezxsobj.gcountnum % 2 != 0) {
+                if (_global_pagefenchengobj.gcountnum % 2 != 0) {
                     _shownum = "<span style='color:yellow;'>" + _num + "</span>";
                 } else {
                     _shownum = _num;
                 }
                 $(".showtoppanel").eq(1).html(_shownum);
-                _global_pagezxsobj.ttsself(("" + _num).replace("-", "负"), _global_pagezxsobj.jiajianfa);
-            },
-            jiajianfaonlyview: function () {
-                //获得随机数
-                var _randobj = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.weishu, 10));
-                var _num = _global_pagezxsobj.getrandomnum(_randobj.min, _randobj.max);
-                var tv = _global_pagezxsobj.getrandomnum(0, 9);
-                var tflag = "";
-                if ((tv == 2) || (tv == 5) || (tv == 7) || (tv == 9)) {
-                    tflag = "-";
-                }
-                _num = parseInt((tflag + _num), 10);
-                _global_pagezxsobj.glistnum.push(parseInt(_num, 10));
-                var _shownum = "";
-                if (_global_pagezxsobj.gcountnum % 2 != 0) {
-                    _shownum = "<span style='color:yellow;'>" + _num + "</span>";
-                } else {
-                    _shownum = _num;
-                }
-                $(".showtoppanel").eq(1).html(_shownum);
-                _global_pagezxsobj.gcountnum++;
-                if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
-                    setTimeout(function () { _global_pagezxsobj.jiajianfaonlyview(); }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-                } else {
-                    setTimeout(function () {
-                        $(".showtoppanel").eq(1).html("答案？");
-                        _global_pagezxsobj._globalflag = false;
-                        $(".bttext").css({ "color": "#fff" });
-                        $("#detailpanel").show();
-                    }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-                }
-            },
-            chengfa: function () {
-                //获得随机数
-                var _randobj_begin = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10));
-                var _num_begin = _global_pagezxsobj.getrandomnum(_randobj_begin.min, _randobj_begin.max);
-                var _randobj_end = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
-                var _num_end = _global_pagezxsobj.getrandomnum(_randobj_end.min, _randobj_end.max);
-                _global_pagezxsobj.glistnum.push(parseInt(_num_begin, 10));
-                _global_pagezxsobj.glistnum.push(parseInt(_num_end, 10));
-                $(".showtoppanel").eq(0).html(_num_begin);
-                $(".showtoppanel").eq(1).html("×");
-                $(".showtoppanel").eq(2).html(_num_end);
-                _global_pagezxsobj.ttsself((_num_begin + "乘" + _num_end), null);
-            },
-            chengfaonlyview: function () {
-                //获得随机数
-                var _randobj_begin = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10));
-                var _num_begin = _global_pagezxsobj.getrandomnum(_randobj_begin.min, _randobj_begin.max);
-                var _randobj_end = _global_pagezxsobj.getrandnum(parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
-                var _num_end = _global_pagezxsobj.getrandomnum(_randobj_end.min, _randobj_end.max);
-                _global_pagezxsobj.glistnum.push(parseInt(_num_begin, 10));
-                _global_pagezxsobj.glistnum.push(parseInt(_num_end, 10));
-                $(".showtoppanel").eq(0).html(_num_begin);
-                $(".showtoppanel").eq(1).html("×");
-                $(".showtoppanel").eq(2).html(_num_end);
-                setTimeout(function () {
-                    $(".showtoppanel").html("");
-                    $(".showtoppanel").eq(1).html("答案？");
-                    _global_pagezxsobj._globalflag = false;
-                    $(".bttext").css({ "color": "#fff" });
-                    $("#detailpanel").show();
-                }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-            },
-            chufa: function () {
-                var _obj = _global_pagezxsobj.getchufanum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10), parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
-                _global_pagezxsobj.glistnum.push(parseInt(_obj.bcs, 10));
-                _global_pagezxsobj.glistnum.push(parseInt(_obj.cs, 10));
-                $(".showtoppanel").eq(0).html(_obj.bcs);
-                $(".showtoppanel").eq(1).html("÷");
-                $(".showtoppanel").eq(2).html(_obj.cs);
-                _global_pagezxsobj.ttsself((_obj.bcs + "除" + _obj.cs), null);
-            },
-            chufaonlyview: function () {
-                var _obj = _global_pagezxsobj.getchufanum(parseInt(_global_pagezxsobj._globalconfigpara.shouweishu, 10), parseInt(_global_pagezxsobj._globalconfigpara.moweishu, 10));
-                _global_pagezxsobj.glistnum.push(parseInt(_obj.bcs, 10));
-                _global_pagezxsobj.glistnum.push(parseInt(_obj.cs, 10));
-                $(".showtoppanel").eq(0).html(_obj.bcs);
-                $(".showtoppanel").eq(1).html("÷");
-                $(".showtoppanel").eq(2).html(_obj.cs);
-                setTimeout(function () {
-                    $(".showtoppanel").html("");
-                    $(".showtoppanel").eq(1).html("答案？");
-                    _global_pagezxsobj._globalflag = false;
-                    $(".bttext").css({ "color": "#fff" });
-                    $("#detailpanel").show();
-                }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
             },
             getrandnum: function (type) {
                 if (type > 9) {
@@ -1152,92 +909,8 @@
                 var min = Math.pow(10, (type - 1));
                 var max = Math.pow(10, type);
                 return { "min": min, "max": max };
-            },
-            geturl: function (num, yusu, yusheng) {
-                if (!num && num == '') {
-                    alert("语音文本不能为空！");
-                    return;
-                }
-                var spd = 5;
-                if (yusu) {
-                    spd = yusu;
-                }
-                var per = 0;
-                if (yusheng) {
-                    per = yusheng;
-                }
-                var _token = "@ViewBag.bdyctoken";
-                if (!_token) {
-                    alert("token为空拒绝访问！");
-                    return;
-                }
-                var _resturl = "http://tsn.baidu.com/text2audio?lan=zh&cuid=08-62-66-B7-87-94&ctp=1&tok=" + _token+"&spd=" + spd + "&per=" + per + "&tex=" + num + "&rdn=" + _global_pagezxsobj.getrandomnum(100, 1000);
-                return _resturl;
-            },
-            ttsself: function (num, func, isviewresult) {
-                var _url = _global_pagezxsobj.geturl(encodeURIComponent(num), parseInt(_global_pagezxsobj._globalconfigpara.yusu, 10), parseInt(_global_pagezxsobj._globalconfigpara.yusheng, 10) - 1);
-                $("#audio").prop("src", _url);
-                var audio = $("#audio")[0];
-                var sdata = new Date();
-                try {
-                    audio.load();
-                    audio.play();
-                    $("#audio").unbind("loadeddata");
-                    $("#audio").on("loadeddata", function (event) {
-                        var event = event || window.event;
-                        var target = event.target || event.srcElement;
-                        var edata = new Date();
-                        //console.log("===加载完毕毫秒数：" + (edata - sdata));
-                        $("#audio").unbind("ended");
-                        $("#audio").on("ended", function (event) {
-                            var event = event || window.event;
-                            var target = event.target || event.srcElement;
-                            //console.log("tx1播放完毕：" + (new Date()).getTime(), 'ended');
-                            var edata = new Date();
-                            //console.log("===tx1播放完毕毫秒数：" + (edata - sdata));
-
-                            if (func) {
-                                _global_pagezxsobj.gcountnum++;
-                                var _paradate = parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000;
-                                _paradate = (_paradate - (edata - sdata)) > 0 ? (_paradate - (edata - sdata)) : 0;
-                                //console.log("真实毫秒数：" + _paradate);
-                                if (_global_pagezxsobj.gcountnum < parseInt(_global_pagezxsobj._globalconfigpara.bishu, 10)) {
-                                    setTimeout(function () { func(); }, _paradate);
-                                } else {
-                                    setTimeout(function () {
-                                        $(".showtoppanel").eq(1).html("答案？");
-                                        _global_pagezxsobj._globalflag = false;
-                                        $(".bttext").css({ "color": "#fff" });
-                                        $("#detailpanel").show();
-                                    }, _paradate);
-                                }
-                            } else {
-                                if (!isviewresult) {
-                                    setTimeout(function () {
-                                        $(".showtoppanel").html("");
-                                        $(".showtoppanel").eq(1).html("答案？");
-                                        _global_pagezxsobj._globalflag = false;
-                                        $(".bttext").css({ "color": "#fff" });
-                                        $("#detailpanel").show();
-                                    }, parseInt(_global_pagezxsobj._globalconfigpara.shijian, 10) * 1000);
-                                }
-                            }
-
-                        });
-                    });
-                } catch (e) {
-                    alert("js外部错误:" + e.message);
-                }
             }
         };
-
-            //var addEvent = function (element, type, callback) {
-            //    if (element.addEventListener) {
-            //        element.addEventListener(type, callback, false);
-            //    } else if (element.attachEvent) {
-            //        element.attachEvent('on' + type, callback)
-            //    }
-            //}
     </script>
     <style>
         body {
@@ -1274,7 +947,7 @@
                 display: flex;
                 align-content: center;
                 justify-content: center;
-                margin-right:2px;
+                margin-right: 2px;
             }
 
                 .sub1_1 div > i {
@@ -1292,12 +965,12 @@
                 color: yellow;
                 margin-right: 2px;
                 position: relative;
-                -webkit-filter: grayscale(100%);
+                /*-webkit-filter: grayscale(100%);*/
             }
 
-                .sub1_2 div > i {
-                    color: yellow;
-                }
+            .sub1_2 div > i {
+                color: #1600ff;
+            }
 
         .sub3 {
             display: flex;
@@ -1344,67 +1017,72 @@
             }
 
         .sysicon2 {
-            font-size: 1.9rem;
+            font-size: 1.3rem;
             color: #000;
+            font-weight: bold;
+            line-height: 2.2rem;
         }
+
         .numcontentpanel {
             position: absolute;
-            width:100%;
-            height:100%;
+            width: 100%;
+            height: 100%;
             top: 0;
             left: 0;
             z-index: 600;
-            overflow-y:auto;
+            overflow-y: auto;
+            background-color: #fff;
+            display: none;
         }
 
         .setconfig {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            width: 3rem;
-            height: 3rem;
-            border: 1px solid #555;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 1px solid #0cd1e0;
             border-radius: 100%;
             text-align: center;
-            line-height: 2.9rem;
-            z-index: 598;
+            line-height: 2.5rem;
+            z-index: 601;
+            display: none;
         }
+
+        .anwser {
+            position: absolute;
+            bottom: 4rem;
+            right: 10px;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 1px solid #0cd1e0;
+            border-radius: 100%;
+            text-align: center;
+            line-height: 2.5rem;
+            z-index: 601;
+            display: none;
+            font-size:0.9rem;
+        }
+        .anwsernum{
+            display:none;
+        }
+
         .deleflag {
             position: absolute;
             top: 0;
             right: 0;
             height: 1px;
-            width: 35px;
+            width: 26px;
             transform-origin: top right;
-            transform: rotateZ(-45deg) translateX(-5px) translateY(2px);
+            transform: rotateZ(-45deg) translateX(-7px) translateY(4px);
             background-color: #ccc;
             -webkit-filter: grayscale(100%);
         }
     </style>
-    <script>
-        $(document).ready(function () {
-            var _w_item = $(".item").width();
-            console.log("_w_item:" + _w_item);
-            var _h_item = $(".item").height() - 2;
-            console.log("_h_item:" + _h_item);
-            console.log("(_w_item / 4):" + (_w_item / 4));
-            var _jd = Math.atan(_h_item / (_w_item / 4)) / (Math.PI / 180);
-            console.log("_jd:" + _jd);
-            var _l = Math.sqrt((_h_item * _h_item) + ((_w_item / 4) * (_w_item / 4)));
-            var _x_py = _l - (_w_item / 4);
-
-            $(".sub2_1").css({ "width": _l + "px", "transform": "rotateZ(" + _jd + "deg) translateX(" + _x_py + "px)" });
-            console.log("_l:" + _l);
-            $(".sub2_2").css({
-                "width": _l + "px", "transform": "rotateZ(" + -_jd + "deg) translateX(" + -_x_py + "px)"
-            });
-        });
-    </script>
 </head>
 <body ontouchstart>
-    <div class="setconfig">设置</div>
-    <div class="setconfigpanel"></div>
-
+    <div class="setconfig"><i class="iconfont_youer icon_youerfanhui sysicon2" style="color:#0cd1e0;font-size:1.2rem;"></i></div>
+    <div class="anwser">答案</div>
     <div class="numcontentpanel">
         <div class="outpanel">
             <div class="item">
@@ -1491,6 +1169,8 @@
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
                 </div>
                 <div class="sub1_2">
+                    <div><i class="iconfont_youer icon_youerxiaolian1 sysicon2"></i></div>
+                    <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
                     <div><i class='zxsiconfont zxsicon-education sysicon2'></i></div>
                 </div>
@@ -1590,6 +1270,5 @@
             </div>
             <div class="item"></div>
         </div>
-    </div>
 </body>
 </html>
