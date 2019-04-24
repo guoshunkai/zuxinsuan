@@ -458,20 +458,6 @@
                 var w = max - min;
                 return parseInt(Math.random() * w + min, 10);
             },
-            getchufanum: function (shouweishu, moweishu) {
-                var _randobj_moweishu = _global_pagefenchengobj.getrandnum(parseInt(moweishu, 10));
-                //除数
-                var _chushu = _global_pagefenchengobj.getrandomnum(_randobj_moweishu.min, _randobj_moweishu.max);
-                //商最大临界值
-                var _bcsmax = Math.floor(Math.pow(10, shouweishu) / _chushu);
-                //商最小临界值
-                var _bcsmin = Math.ceil(Math.pow(10, (shouweishu - 1)) / _chushu);
-                //商
-                var _shang = _global_pagefenchengobj.getrandomnum(_bcsmin, _bcsmax);
-                //被除数
-                var _bcs = _shang * _chushu;
-                return { "bcs": _bcs, "cs": _chushu, "shang": _shang };
-            },
             init: function () {
                 this.initdata();
                 this.inithtml();
@@ -496,7 +482,7 @@
                 var _pagepanelhtm = $("<div class='pagepanel'></div>");
                 _pagepanelhtm.css({ "height": this._pageheight + "px" });
 
-                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i><span class='mytitletext'>分成题库</span></div></div>");
+                var _topbarhtm = $("<div class='topbar'><div class='toptext'><i class='zxsiconfont zxsicon-education sysicon'></i><span class='mytitletext'></span></div></div>");
                 _pagepanelhtm.append(_topbarhtm);
 
                 var _middlecontenthtm = $("<div class='middlecontent'></div>");
@@ -825,11 +811,39 @@
                     }
                 }
                 var _reallist = [];
+                var _orderarr = [];
                 for (var i = 0; i < _countnum; i++) {
-                    var _randnum = _global_pagefenchengobj.getrandomnum(0, _list_result.length - 1);
+                    var _flagre = false;
+                    var _randnum = 0;
+                    do {
+                        _randnum = _global_pagefenchengobj.getrandomnum(0, _list_result.length - 1);
+                        if (_orderarr.length >= _countnum) {
+                            _flagre = false;
+                        } else {
+                            var mm = 0;
+                            for (var v = 0; v < _orderarr.length;v++) {
+                                if (_orderarr[v] == _randnum) {
+                                    mm++;
+                                    break;
+                                }
+                            }
+                            if (mm > 0) {
+                                _flagre = true;
+                            } else {
+                                _orderarr.push(_randnum);
+                                _flagre = false;
+                            }
+                        }
+                    } while (_flagre);
                     _reallist.push(_list_result[_randnum]);
                 }
-                console.log(JSON.stringify(_reallist));
+                console.log("_countnum:" + _countnum);
+                console.log("_list_result长度:" + _list_result.length);
+                console.log("_list_result:" + JSON.stringify(_list_result));
+                console.log("_orderarr长度:" + _orderarr.length);
+                console.log("_orderarr:" + JSON.stringify(_orderarr));
+                console.log("_reallist长度:" + _reallist.length);
+                console.log("_reallist:" + JSON.stringify(_reallist));
                 //初始化图形界面
                 $(".numcontentpanel").html("");
                 for (var k = 0; k < _reallist.length; k++) {
@@ -866,14 +880,14 @@
                         "</div >" +
                         "</div >");
                     var _item4 = $("<div class=\"item\">\
-                                <div class= \"sub4\" >\
-                                <div class=\"prenum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) + "</span>&nbsp;&nbsp;</div>\
-                                <div class=\"fuhao\">+</div>\
-                                <div class=\"endnum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
-                                <div class=\"denghao\">=</div>\
-                                <div class=\"jieguo\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
-                                </div >\
-                                </div >");
+                                            <div class= \"sub4\" >\
+                                            <div class=\"prenum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) + "</span>&nbsp;&nbsp;</div>\
+                                            <div class=\"fuhao\">+</div>\
+                                            <div class=\"endnum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                            <div class=\"denghao\">=</div>\
+                                            <div class=\"jieguo\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                            </div >\
+                                            </div >");
                     var _item5 = $("<div class=\"item\"></div>");
                     _outpanel.append(_item2);
                     _outpanel.append(_item3);
@@ -937,14 +951,14 @@
                         "</div >" +
                         "</div >");
                     var _item4 = $("<div class=\"item\">\
-                                <div class= \"sub4\" >\
-                                <div class=\"prenum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
-                                <div class=\"fuhao\">-</div>\
-                                <div class=\"endnum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
-                                <div class=\"denghao\">=</div>\
-                                <div class=\"jieguo\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) + "</span>&nbsp;&nbsp;</div>\
-                                </div >\
-                                </div >");
+                                            <div class= \"sub4\" >\
+                                            <div class=\"prenum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1 + _reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                            <div class=\"fuhao\">-</div>\
+                                            <div class=\"endnum\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num2) + "</span>&nbsp;&nbsp;</div>\
+                                            <div class=\"denghao\">=</div>\
+                                            <div class=\"jieguo\">&nbsp;&nbsp;<span class='anwsernum'>" + (_reallist[k].num1) + "</span>&nbsp;&nbsp;</div>\
+                                            </div >\
+                                            </div >");
                     var _item5 = $("<div class=\"item\"></div>");
                     _outpanel.append(_item2);
                     _outpanel.append(_item3);
@@ -952,17 +966,6 @@
                     _outpanel.append(_item5);
                     $(".numcontentpanel").append(_outpanel);
                 }
-            },
-            getrandnum: function (type) {
-                if (type > 9) {
-                    type = 9;
-                }
-                if (type < 1) {
-                    type = 1;
-                }
-                var min = Math.pow(10, (type - 1));
-                var max = Math.pow(10, type);
-                return { "min": min, "max": max };
             }
         };
     </script>
@@ -1143,6 +1146,7 @@
             height: 2rem;
             line-height: 2rem;
         }
+
         .titlebg {
             position: absolute;
             left: 0;
